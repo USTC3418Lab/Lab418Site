@@ -38,5 +38,6 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
 
 
 ## 已完成功能
+- 接口:获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
 
 
