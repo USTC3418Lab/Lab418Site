@@ -22,7 +22,6 @@ public class DocController {
 
     @RequestMapping("/doc")
     public List<DocEntity> getdocs(String title){
-        List<DocEntity> list = docMapper.getDocs();
         return docMapper.getDocs();
     }
 }
