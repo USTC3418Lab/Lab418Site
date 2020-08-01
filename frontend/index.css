@@ -1,0 +1,109 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-family: Consolas, '等线';
+    background-color: #fafafa;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow: hidden;
+    --title-font-size: 24px;
+    --sub-title-font-size: 20px;
+    --ssub-title-font-size: 18px;
+    --menu-item-font-size: 18px;
+    --header-height: 70px;
+}
+
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+a:visited {
+    color: darkcyan;
+}
+
+.drawer-menu {
+    width: 12%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: rgb(16, 30, 70);
+    transition: all ease-in-out 300ms;
+}
+
+.menu-title {
+    cursor: pointer;
+    font-weight: bold;
+    height: var(--header-height);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--title-font-size);
+    border-bottom: #a0a0a0 1px solid;
+}
+
+.menu-item {
+    cursor: pointer;
+    width: 84%;
+    padding: 8%;
+    color: white;
+    transition: all ease 300ms;
+    font-size: var(--menu-item-font-size);
+    text-align: center;
+    border-bottom: #d3d3d388 1px solid;
+}
+
+.menu-ul {
+    margin: 0px;
+}
+
+.menu-item:hover {
+    background-color: rgb(160, 160, 160);
+}
+
+.main-body {
+    width: 100%;
+    overflow: auto;
+    background-color: #eeeeee;
+    position: relative;
+    transition: all ease-in-out 300ms;
+}
+
+.body-sub-title {
+    font-size: var(--sub-title-font-size);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.body-header {
+    background-color: white;
+    height: var(--header-height);
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    transition: all ease 300ms;
+}
+
+#docs {
+    display: flex;
+    transition: all ease 300ms;
+    flex-direction: column;
+}
+
+#docList {
+    padding-left: 20px;
+}
