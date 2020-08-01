@@ -1,6 +1,7 @@
 package com.example.jeffrey.LabSite.Mapper;
 
 import com.example.jeffrey.LabSite.Entity.DocEntity;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -14,4 +15,7 @@ public interface DocMapper {
 
     @Select("select * from doc")
     List<DocEntity> getDocs();
+
+    @Delete("delete * from doc where title = #{title}")
+    void deleteDocByTitle(@Param("title")String title);
 }

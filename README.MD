@@ -28,16 +28,16 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
       }
       ```
     - 说明: 使用GET请求获取所有信息，展示时根据时间戳由大到小排列文章。修改时直接POST整个，修改后更新时间戳
-    - 接口: `/doc GET [doc]`
           
 
 ### 已确定接口
 | 接口名           | 方法 | 参数 | 返回值                            |
 | ---------------- | ---- | ---- | --------------------------------- |
 | 获取所有常用信息 | GET  | 无   | `[{title, paragraph, timestamp}]` |
-
+| 获取单个常用信息 | GET | title | `{title, paragraph, timestamp}` |
+| 删除某一常用信息 | GET | title | `{code, operation, message}` |
 
 ## 已完成功能
 - 接口:获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
-
+- 接口:删除某一常用信息  `/doc/delete?title={} GET`,删除成功时code为200，删除失败code返回500
 
