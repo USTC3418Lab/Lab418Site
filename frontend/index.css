@@ -29,12 +29,19 @@ a:visited {
     color: darkcyan;
 }
 
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    transition: all ease 300ms;
+}
+
 .drawer-menu {
     width: 12%;
     display: flex;
     position: relative;
     flex-direction: column;
-    background-color: rgb(16, 30, 70);
+    background-color: rgb(10, 17, 34);
     transition: all ease-in-out 300ms;
 }
 
@@ -66,7 +73,7 @@ a:visited {
 }
 
 .menu-item:hover {
-    background-color: rgb(160, 160, 160);
+    background-color: rgb(128, 128, 128);
 }
 
 .main-body {
@@ -74,36 +81,5 @@ a:visited {
     overflow: auto;
     background-color: #eeeeee;
     position: relative;
-    transition: all ease-in-out 300ms;
-}
-
-.body-sub-title {
-    font-size: var(--sub-title-font-size);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.body-header {
-    background-color: white;
-    height: var(--header-height);
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-}
-
-#root {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    transition: all ease 300ms;
-}
-
-#docs {
-    display: flex;
-    transition: all ease 300ms;
-    flex-direction: column;
-}
-
-#docList {
-    padding-left: 20px;
+    transition: allease-in-out300ms;
 }
