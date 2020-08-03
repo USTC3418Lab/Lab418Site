@@ -1,0 +1,84 @@
+.doc-sub-title {
+    font-size: var(--sub-title-font-size);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.doc-header {
+    background-color: white;
+    height: var(--header-height);
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.docs {
+    display: flex;
+    transition: allease300ms;
+    flex-direction: column;
+}
+
+.doc-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#docList {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.doc-split-line {
+    width: 1px;
+    height: 100;
+    margin: 0px 40px;
+    background-color: lightgray;
+}
+
+.doc-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px 20px 0px;
+}
+
+.editor-header {
+    font-size: var(--sub-title-font-size);
+    margin: 0px 0px 10px 0px;
+    font-weight: bold;
+}
+
+.editor-title-input {
+    font: inherit;
+    border-radius: 2px;
+    border: none;
+    padding: 10px 5px;
+    outline: none;
+}
+
+.editor-content {
+    margin-top: 20px;
+    outline: none;
+    font: inherit;
+    border: none;
+    border-radius: 2px;
+    padding: 5px;
+    resize: none;
+}
+
+.editor-submit {
+    width: fit-content;
+    align-self: flex-end;
+    background-color: rgb(58, 58, 58);
+    color: white;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 20px;
+    transition: all 300ms ease;
+}
+
+.editor-submit:hover {
+    background-color: rgb(117, 117, 117);
+}

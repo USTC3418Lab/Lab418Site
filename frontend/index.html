@@ -7,9 +7,10 @@
     <title>实验室网站</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="card.css">
+    <link rel="stylesheet" href="docs.css">
     <script src="/jquery.min.js"></script>
     <script>
-        // args: { innerText, attrList }
+        // args: { innerHTML, attrList }
         function createElement(tag, args) {
             var res;
             if (tag == "svg" || tag == "path")
@@ -17,7 +18,7 @@
             else
                 res = document.createElement(tag);
             if (args) {
-                res.innerText = args.innerText || "";
+                res.innerHTML = args.innerHTML || "";
                 for (const key in args.attrList || {})
                     if (args.attrList.hasOwnProperty(key))
                         res.setAttribute(key, args.attrList[key]);
@@ -71,7 +72,7 @@
             const card = createElement("div", { attrList: { class: "card" } });
             const cardHeader = createElement("div", { attrList: { class: "card-header" } });
             const cardTitle = createElement("span", {
-                innerText: doc.title,
+                innerHTML: doc.title,
                 attrList: { class: "card-title" }
             });
             const cardEditSVG = createElement("svg", {
@@ -89,7 +90,7 @@
                 }
             });
             const spanPara = createElement("span", {
-                innerText: doc.paragraph,
+                innerHTML: doc.paragraph,
                 class: "card-paragraph"
             });
 
@@ -119,7 +120,7 @@
             for (let i = 0; i < menuList.length; i++) {
                 const item = menuList[i];
                 var menuElement = createElement("li", {
-                    innerText: item.text,
+                    innerHTML: item.text,
                     attrList: {
                         class: "menu-item"
                     }
@@ -194,13 +195,25 @@
             </ul>
         </div>
         <div id="main-container" class="main-body">
-            <div id="docs">
-                <div class="body-header">
-                    <span id="docTitle" class="body-sub-title">常用信息记录</span>
+            <div id="docs" class="docs">
+                <div class="doc-header">
+                    <span id="docTitle" class="doc-sub-title">常用信息记录</span>
                 </div>
-                <ul id="docList">
-                </ul>
+                <div class="doc-container">
+                    <ul id="docList">
+                    </ul>
+                    <div class="doc-split-line"></div>
+                    <div id="docEditor" class="doc-editor">
+                        <!-- <span class="editor-header">添加一条信息</span> -->
+                        <input type="text" name="editor-title" id="editor-title" class="editor-title-input"
+                            placeholder="标题">
+                        <textarea class="editor-content" name="editor-content" id="editor-content" cols="30"
+                            rows="15" placeholder="内容"></textarea>
+                        <button id="editor-submit" class="editor-submit">添加</button>
+                    </div>
+                </div>
             </div>
+            <div id="paster"></div>
         </div>
     </div>
 </body>
