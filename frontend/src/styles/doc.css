@@ -1,12 +1,30 @@
-.doc-card{
-    margin: 20px;
-    max-width: 400px;
-    flex: 1;
-    height: fit-content;
+.doc {
+    overflow: hidden;
 }
 
-.doc-content{
+.doc-title{
+    padding: 0px 20px;
+    font-weight: bold;
+}
+
+.doc-content {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow: auto;
+}
+
+.doc-card {
+    margin: 20px;
+    max-width: 400px;
+    height: fit-content;
+    transition: all 300ms ease;
+}
+
+.doc-card:hover {
+    box-shadow: rgb(192, 192, 192) 1px 1px 24px;
+}
+
+.doc-error-alert {
+    margin: 20px;
 }

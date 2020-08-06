@@ -13,9 +13,9 @@ const { Header, Sider } = Layout;
 class RouteDispatcher extends Component {
     render() {
         const path2Page = {
-            "/doc": <DocPage />,
-            "/doc-editor": <DocEditor />,
-            "/clipboard": <ClipboardPage />
+            "/page/doc": <DocPage />,
+            "/page/doc-editor": <DocEditor />,
+            "/page/clipboard": <ClipboardPage />
         };
         return path2Page[this.props.path || "/doc"];
     }
@@ -24,7 +24,7 @@ class RouteDispatcher extends Component {
 export default class App extends Component {
     // Todo 可以通过 [遍历多级数组] 方式构建 菜单Menu 和 路由Switch 从而避免耦合
     render() {
-        const paths = ["/doc", "/doc-editor", "/clipboard"];
+        const paths = ["/page/doc", "/page/doc-editor", "/page/clipboard"];
         const titles = ["实验室常用信息", "所有信息", "添加信息", "剪贴板"];
         const SwitchList = ({ paths }) => (
             <>
@@ -40,7 +40,7 @@ export default class App extends Component {
                 <Router>
                     <Sider className="sider" >
                         <Header className="header">
-                            <Link to="/doc" className="sider-title">Lab&nbsp;3418</Link>
+                            <Link onSelect={() => false} to={paths[0]} className="sider-title">Lab&nbsp;3418</Link>
                         </Header>
                         <SiderMenu paths={paths} titles={titles} />
                     </Sider>
