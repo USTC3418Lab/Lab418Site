@@ -1,9 +1,9 @@
 import React from 'react';
 import { Component } from "react";
 import { Layout } from 'antd';
-import './App.css';
+import './styles/App.css';
 import SiderMenu from './SiderMenu';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Link } from 'react-router-dom';
 import DocEditor from './pages/docEditor';
 import ClipboardPage from './pages/clipboard';
 import DocPage from './pages/doc';
@@ -21,7 +21,7 @@ class RouteDispatcher extends Component {
     }
 }
 
-export class App extends Component {
+export default class App extends Component {
     // Todo 可以通过 [遍历多级数组] 方式构建 菜单Menu 和 路由Switch 从而避免耦合
     render() {
         const paths = ["/doc", "/doc-editor", "/clipboard"];
@@ -39,7 +39,9 @@ export class App extends Component {
             <Layout className="app">
                 <Router>
                     <Sider className="sider" >
-                        <Header className="sider-title">Lab3418</Header>
+                        <Header className="header">
+                            <Link to="/doc" className="sider-title">Lab&nbsp;3418</Link>
+                        </Header>
                         <SiderMenu paths={paths} titles={titles} />
                     </Sider>
                     <Layout className="app-body">
@@ -51,5 +53,3 @@ export class App extends Component {
             </Layout>);
     }
 }
-
-export default App;
