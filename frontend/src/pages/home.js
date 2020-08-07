@@ -1,0 +1,22 @@
+import React, { Component } from 'react';
+import { Layout } from 'antd';
+import '../styles/homepage.css'
+
+const { Header } = Layout;
+
+export default class HomePage extends Component {
+    render() {
+        return <Layout className="homepage">
+            <Header className="header">实验室内部网站</Header>
+            <div style={{ display: "flex", flex: 1 }}>
+                <span className="homepage-content">
+                    <a href="https://github.com/EricJeffrey" target="_">EricJeffrey</a>
+                    <br />
+                    <a href="https://github.com/buttercannfly/" target="_">Buttercannfly</a>
+                    <br />
+                    倾情贡献
+                </span>
+            </div>
+        </Layout>;
+    }
+};

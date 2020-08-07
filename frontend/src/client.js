@@ -18,7 +18,8 @@ export function deleteDoc(title) {
     console.log("deleting: ", title);
     return new Promise((resolve, reject) => {
         randomer().then(v => resolve(JSON.parse(v))).catch(v => reject(v));
-        // todo delete api here
+        // todo delete api
     });
 }
+// todo update api
 

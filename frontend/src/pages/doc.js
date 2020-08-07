@@ -5,6 +5,7 @@ import '../styles/doc.css';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { getDoc, deleteDoc } from '../client';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
 const { Header, Content } = Layout;
 
@@ -114,9 +115,12 @@ class DocCard extends Component {
                     cancelText="否">
                     <DeleteOutlined key="delete" />
                 </Popconfirm>,
-                <EditOutlined key="edit" onClick={this.onEdit} />
+                <Link
+                    to={{ pathname: "/page/doc-editor", state: { doc: doc, typeUpdate: true } }}>
+                    <EditOutlined key="edit" />
+                </Link>
             ]}>
-            <ReactMarkdown  className="doc-card-para">{doc.paragraph}</ReactMarkdown>
+            <ReactMarkdown className="doc-card-para">{doc.paragraph}</ReactMarkdown>
         </Card>;
     }
 };

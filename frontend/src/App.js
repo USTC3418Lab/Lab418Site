@@ -7,34 +7,33 @@ import { Switch, Route, BrowserRouter as Router, Link } from 'react-router-dom';
 import DocEditor from './pages/docEditor';
 import ClipboardPage from './pages/clipboard';
 import DocPage from './pages/doc';
+import HomePage from './pages/home';
 
 const { Header, Sider } = Layout;
 
-class RouteDispatcher extends Component {
-    render() {
-        const path2Page = {
-            "/page/doc": <DocPage />,
-            "/page/doc-editor": <DocEditor />,
-            "/page/clipboard": <ClipboardPage />
-        };
-        return path2Page[this.props.path || "/doc"];
+const path2page = (path) => {
+    switch (path) {
+        case "/page/doc":
+            return DocPage;
+        case "/page/doc-editor":
+            return DocEditor;
+        case "/page/clipboard":
+            return ClipboardPage;
+        case "/":
+        default:
+            return HomePage;
     }
-}
+};
 
 export default class App extends Component {
-    // Todo 可以通过 RouteWithSubRoutes 方式构建 菜单Menu 和 路由Switch 从而避免耦合
     render() {
-        const paths = ["/page/doc", "/page/doc-editor", "/page/clipboard"];
-        const titles = ["实验室常用信息", "所有信息", "添加信息", "剪贴板"];
-        const RouteList = ({ paths }) => (
-            <>
-                {paths.map((path, index) => (
-                    <Route key={index} path={path}>
-                        <RouteDispatcher path={path} />
-                    </Route>
-                ))}
-            </>
-        );
+        const paths = ["/", "/page/doc", "/page/doc-editor", "/page/clipboard"];
+        const titles = ["首页", "实验室常用信息", "所有信息", "添加信息", "剪贴板"];
+        const RouteList = ({ paths }) => (<>
+            {paths.map((path, index) => (
+                <Route key={index} path={path} exact={true} component={path2page(path)}/>
+            ))}
+        </>);
         return (
             <Layout className="app">
                 <Router>

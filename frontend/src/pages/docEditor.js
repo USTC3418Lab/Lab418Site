@@ -12,8 +12,9 @@ const { Header } = Layout;
 export default class DocEditor extends Component {
     constructor(props) {
         super(props);
-
-        this.state = { rawText: "" };
+        this.state = {
+            rawText: null
+        };
         this.onEditorTextChange = this.onEditorTextChange.bind(this);
     }
 
@@ -23,12 +24,21 @@ export default class DocEditor extends Component {
         this.setState({ rawText: value });
     }
 
-
     render() {
+        const passedState = this.props.location ? this.props.location.state : null;
+        const doc = passedState ? passedState.doc : null;
+
+        var buttonText = "添加", titleText = null, editorText = null;
+        if (doc) {
+            buttonText = "更新";
+            titleText = doc.title;
+            editorText = doc.paragraph
+        }
+
         return <Layout className="doc-editor">
             <Header className="editor-header header">
-                <Input placeholder="标题" className="editor-title-input" />
-                <Button type="primary">添加</Button>
+                <Input placeholder="标题" className="editor-title-input" value={titleText} />
+                <Button type="primary">{buttonText}</Button>
             </Header>
             <Layout className="editor-holder">
                 <CodeMirror
@@ -38,6 +48,7 @@ export default class DocEditor extends Component {
                         lineNumbers: true
                     }}
                     className="editor-codemirror"
+                    value={editorText}
                     onChange={this.onEditorTextChange} />
                 <ReactMarkdown className="editor-preview" source={this.state.rawText} />
             </Layout>

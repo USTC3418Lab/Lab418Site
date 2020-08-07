@@ -1,9 +1,10 @@
 .doc {
     overflow: hidden;
+    --gap-common: 20px;
 }
 
 .doc-title{
-    padding: 0px 20px;
+    padding: 0px var(--gap-common);
     font-weight: bold;
 }
 
@@ -15,7 +16,7 @@
 }
 
 .doc-card {
-    margin: 20px;
+    margin: var(--gap-common);
     max-width: 400px;
     height: fit-content;
     transition: all 300ms ease;
