@@ -1,12 +1,12 @@
 import React from 'react';
 import { Component } from 'react';
-import { Layout, Card, Alert, Popconfirm } from 'antd';
+import { Layout, Card, Popconfirm, Empty, message } from 'antd';
 import '../styles/doc.css';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { getDoc } from '../client';
+import { getDoc, deleteDoc } from '../client';
+import ReactMarkdown from 'react-markdown';
 
 const { Header, Content } = Layout;
-
 
 export default class DocPage extends Component {
     constructor(props) {
@@ -14,6 +14,8 @@ export default class DocPage extends Component {
 
         this.state = { docs: null, serviceAvailable: true };
         this.init = this.init.bind(this);
+        this.onEdit = this.onEdit.bind(this);
+        this.deleteCard = this.deleteCard.bind(this);
     }
 
     init() {
@@ -30,6 +32,9 @@ export default class DocPage extends Component {
     }
     deleteCard(index, event) {
         console.log("index: ", index, ", target: ", event.target);
+        deleteDoc(this.state.docs[index].title)
+            .then(() => message.info("删除成功"))
+            .catch((reason) => message.error("删除失败"));
     }
 
     componentDidMount() { this.init(); }
@@ -47,19 +52,23 @@ export default class DocPage extends Component {
                     />
                 ))}
             </>);
-        // todo need a bar to show update/delete status
         var contentElement;
-        if (!this.state.serviceAvailable)
-            contentElement = <Alert className="doc-error-alert"
-                message="获取常用信息失败" type="warning" />;
-        else
+        if (!this.state.serviceAvailable) {
             contentElement = <Content className="doc-content">
-                {generateCards(this.state.docs || [])}
+                <div className="doc-error-div">获取常用信息失败</div>
             </Content>;
+        } else {
+            if (!this.state.docs || this.state.docs.length === 0)
+                contentElement = <Empty description="无数据" className="doc-empty" />;
+            else
+                contentElement = generateCards(this.state.docs || []);
+        }
         return (
             <Layout className="doc">
                 <Header className="header doc-title">实验室常用信息汇总</Header>
-                {contentElement}
+                <Content className="doc-content">
+                    {contentElement}
+                </Content>
             </Layout>
         );
     }
@@ -107,7 +116,7 @@ class DocCard extends Component {
                 </Popconfirm>,
                 <EditOutlined key="edit" onClick={this.onEdit} />
             ]}>
-            <p className="doc-card-para">{doc.paragraph}</p>
+            <ReactMarkdown  className="doc-card-para">{doc.paragraph}</ReactMarkdown>
         </Card>;
     }
 };

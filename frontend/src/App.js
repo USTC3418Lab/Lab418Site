@@ -22,11 +22,11 @@ class RouteDispatcher extends Component {
 }
 
 export default class App extends Component {
-    // Todo 可以通过 [遍历多级数组] 方式构建 菜单Menu 和 路由Switch 从而避免耦合
+    // Todo 可以通过 RouteWithSubRoutes 方式构建 菜单Menu 和 路由Switch 从而避免耦合
     render() {
         const paths = ["/page/doc", "/page/doc-editor", "/page/clipboard"];
         const titles = ["实验室常用信息", "所有信息", "添加信息", "剪贴板"];
-        const SwitchList = ({ paths }) => (
+        const RouteList = ({ paths }) => (
             <>
                 {paths.map((path, index) => (
                     <Route key={index} path={path}>
@@ -46,7 +46,7 @@ export default class App extends Component {
                     </Sider>
                     <Layout className="app-body">
                         <Switch>
-                            <SwitchList paths={paths} />
+                            <RouteList paths={paths} />
                         </Switch>
                     </Layout>
                 </Router>

@@ -7,8 +7,11 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.5.2",
+    "codemirror": "^5.56.0",
     "react": "^16.13.1",
+    "react-codemirror2": "^7.2.1",
     "react-dom": "^16.13.1",
+    "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
@@ -32,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/codemirror": "0.0.97"
   }
 }

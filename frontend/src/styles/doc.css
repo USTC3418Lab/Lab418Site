@@ -25,6 +25,9 @@
     box-shadow: rgb(192, 192, 192) 1px 1px 24px;
 }
 
-.doc-error-alert {
-    margin: 20px;
+.doc-error-div, .doc-empty {
+    flex: 1;
+    height: fit-content;
+    align-self: center;
+    text-align: center;
 }
