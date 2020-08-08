@@ -1,6 +1,6 @@
 # 实验室网站前端页面
 
-原生HTML+JS+CSS编写。
+React+AntDesign
 
 
 ## 问题与解决
