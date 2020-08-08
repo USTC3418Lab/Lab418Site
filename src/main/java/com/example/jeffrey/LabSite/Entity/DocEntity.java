@@ -1,6 +1,8 @@
 package com.example.jeffrey.LabSite.Entity;
 
-public class DocEntity {
+import java.io.Serializable;
+
+public class DocEntity implements Serializable {
     private String title;
     private String paragragh;
     private Long timestamp;
