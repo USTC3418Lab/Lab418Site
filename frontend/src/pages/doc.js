@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { Layout, Card, Popconfirm, Empty, message } from 'antd';
 import '../styles/doc.css';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { getDoc, deleteDoc } from '../client';
+import { mockClient } from '../client';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export default class DocPage extends Component {
     }
 
     init() {
-        getDoc()
+        mockClient.getDoc()
             .then(docs => this.setState({ "docs": docs }))
             .catch(reason => {
                 console.warn("get doc failed, reason: ", reason);
@@ -33,7 +33,7 @@ export default class DocPage extends Component {
     }
     deleteCard(index, event) {
         console.log("index: ", index, ", target: ", event.target);
-        deleteDoc(this.state.docs[index].title)
+        mockClient.deleteDoc(this.state.docs[index].title)
             .then(() => message.info("删除成功"))
             .catch((reason) => message.error("删除失败"));
     }
@@ -116,7 +116,7 @@ class DocCard extends Component {
                     <DeleteOutlined key="delete" />
                 </Popconfirm>,
                 <Link
-                    to={{ pathname: "/page/doc-editor", state: { doc: doc, typeUpdate: true } }}>
+                    to={{ pathname: "/page/doc-update", state: { doc: doc, typeUpdate: true } }}>
                     <EditOutlined key="edit" />
                 </Link>
             ]}>

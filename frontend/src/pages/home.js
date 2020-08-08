@@ -10,11 +10,17 @@ export default class HomePage extends Component {
             <Header className="header">实验室内部网站</Header>
             <div style={{ display: "flex", flex: 1 }}>
                 <span className="homepage-content">
+                    <span>418实验室内部网站</span>
+                    <br />
+                    <span>I have an idea -- </span>
+                    <a href="https://github.com/EricJeffrey/Lab418Site" target="_">添加功能</a>
+                    <br />
+                    <br />
+                    <span>开发人员</span>
+                    <br />
                     <a href="https://github.com/EricJeffrey" target="_">EricJeffrey</a>
                     <br />
                     <a href="https://github.com/buttercannfly/" target="_">Buttercannfly</a>
-                    <br />
-                    倾情贡献
                 </span>
             </div>
         </Layout>;
