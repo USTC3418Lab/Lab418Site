@@ -1,6 +1,6 @@
 package com.example.jeffrey.LabSite.Entity;
 
-public class ope_result {
+public class Ope_Result {
     private int code;
     private String message;
 

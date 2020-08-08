@@ -1,7 +1,7 @@
 package com.example.jeffrey.LabSite.Controller;
 
 import com.example.jeffrey.LabSite.Entity.DocEntity;
-import com.example.jeffrey.LabSite.Entity.ope_result;
+import com.example.jeffrey.LabSite.Entity.Ope_Result;
 import com.example.jeffrey.LabSite.Mapper.DocMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,8 @@ public class DocController {
         return list;
     }
     @RequestMapping("/doc/delete?{title}")
-    public ope_result deleteDoc(String title){
-        ope_result ope = new ope_result();
+    public Ope_Result deleteDoc(String title){
+        Ope_Result ope = new Ope_Result();
         if (docMapper.getDocByTitle(title)!=null) {
             docMapper.deleteDocByTitle(title);
             redisTemplate.delete(title);//缓存、数据库一致
@@ -56,8 +56,8 @@ public class DocController {
         }
     }
     @PostMapping("/doc/add")
-    public ope_result addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
-        ope_result ope = new ope_result();
+    public Ope_Result addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
+        Ope_Result ope = new Ope_Result();
         if(docMapper.getDocByTitle(title)!=null){
             ope.setCode(400);
             ope.setMessage("DOC_EXISTED");
@@ -76,8 +76,8 @@ public class DocController {
     }
 
     @PostMapping("/doc/update")
-    public ope_result updateDoc(@RequestParam("title")String title,@RequestParam("paragraph")String paragraph){
-        ope_result ope = new ope_result();
+    public Ope_Result updateDoc(@RequestParam("title")String title,@RequestParam("paragraph")String paragraph){
+        Ope_Result ope = new Ope_Result();
         if(docMapper.getDocByTitle(title) == null){
             ope.setCode(401);
             ope.setMessage("DOC_NOT_FOUND");
