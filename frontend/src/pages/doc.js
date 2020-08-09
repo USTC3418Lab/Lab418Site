@@ -3,8 +3,9 @@ import { Component } from 'react';
 import { Layout, Card, Popconfirm, Empty, message } from 'antd';
 import '../styles/doc.css';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { getDoc, deleteDoc } from '../client';
+import { mockClient } from '../client';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
 const { Header, Content } = Layout;
 
@@ -19,10 +20,13 @@ export default class DocPage extends Component {
     }
 
     init() {
-        getDoc()
-            .then(docs => this.setState({ "docs": docs }))
+        mockClient.getDoc()
+            .then(docs => {
+                console.log("getDoc, docs: ", docs);
+                this.setState({ "docs": docs });
+            })
             .catch(reason => {
-                console.warn("get doc failed, reason: ", reason);
+                message.error("获取常用信息失败: " + reason);
                 this.setState({ serviceAvailable: false });
             });
     }
@@ -32,8 +36,13 @@ export default class DocPage extends Component {
     }
     deleteCard(index, event) {
         console.log("index: ", index, ", target: ", event.target);
-        deleteDoc(this.state.docs[index].title)
-            .then(() => message.info("删除成功"))
+        mockClient.deleteDoc(this.state.docs[index].title)
+            .then((data) => {
+                if (data.code === 200)
+                    message.info("删除成功");
+                else
+                    message.warn("删除失败 - 服务器错误");
+            })
             .catch((reason) => message.error("删除失败"));
     }
 
@@ -114,9 +123,12 @@ class DocCard extends Component {
                     cancelText="否">
                     <DeleteOutlined key="delete" />
                 </Popconfirm>,
-                <EditOutlined key="edit" onClick={this.onEdit} />
+                <Link
+                    to={{ pathname: "/page/doc-update", state: { doc: doc, typeUpdate: true } }}>
+                    <EditOutlined key="edit" />
+                </Link>
             ]}>
-            <ReactMarkdown  className="doc-card-para">{doc.paragraph}</ReactMarkdown>
+            <ReactMarkdown className="doc-card-para">{doc.paragraph}</ReactMarkdown>
         </Card>;
     }
 };
