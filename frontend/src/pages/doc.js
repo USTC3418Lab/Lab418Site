@@ -21,9 +21,12 @@ export default class DocPage extends Component {
 
     init() {
         mockClient.getDoc()
-            .then(docs => this.setState({ "docs": docs }))
+            .then(docs => {
+                console.log("getDoc, docs: ", docs);
+                this.setState({ "docs": docs });
+            })
             .catch(reason => {
-                console.warn("get doc failed, reason: ", reason);
+                message.error("获取常用信息失败: " + reason);
                 this.setState({ serviceAvailable: false });
             });
     }
@@ -34,7 +37,12 @@ export default class DocPage extends Component {
     deleteCard(index, event) {
         console.log("index: ", index, ", target: ", event.target);
         mockClient.deleteDoc(this.state.docs[index].title)
-            .then(() => message.info("删除成功"))
+            .then((data) => {
+                if (data.code === 200)
+                    message.info("删除成功");
+                else
+                    message.warn("删除失败 - 服务器错误");
+            })
             .catch((reason) => message.error("删除失败"));
     }
 

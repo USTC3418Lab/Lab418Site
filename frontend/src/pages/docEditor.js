@@ -36,17 +36,21 @@ export default class DocEditor extends Component {
         this.setState({ inputTitle: ev.target.value });
     }
 
-    addDoc() { }
+    addDoc() {
+        // todo add doc
+    }
 
     updateDoc() {
         mockClient.updateDoc(this.state.inputTitle, this.state.editorContent)
-            .then(resp => {
-                console.log(resp);
-                message.info("更新成功");
+            .then(data => {
+                if (data.code === 200)
+                    message.info("更新成功");
+                else
+                    message.warn("更新失败 - 服务器错误");
                 // todo go back here
             })
             .catch(v => {
-                console.log(v);
+                console.error(v);
                 message.error("更新失败");
             });
     }
