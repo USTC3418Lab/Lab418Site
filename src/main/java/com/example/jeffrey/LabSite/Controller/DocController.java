@@ -3,12 +3,10 @@ package com.example.jeffrey.LabSite.Controller;
 import com.example.jeffrey.LabSite.Entity.DocEntity;
 import com.example.jeffrey.LabSite.Entity.Ope_Result;
 import com.example.jeffrey.LabSite.Mapper.DocMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
 import java.util.Date;
 import java.util.List;
 
