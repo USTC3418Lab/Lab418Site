@@ -18,31 +18,34 @@ public class DocController {
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
 
-    @RequestMapping("/doc?{title}")
-    public DocEntity getdoc(@PathVariable("title") String title){
-        DocEntity docEntity= (DocEntity) redisTemplate.opsForValue().get(title);
-        if(docEntity == null){
-            docEntity = docMapper.getDocByTitle(title);
-            redisTemplate.opsForValue().set(title,docEntity);
-        }
-        return docEntity;
-    }
-
     @RequestMapping("/doc")
-    public List<DocEntity> getdocs(){
-        List<DocEntity> list = (List<DocEntity>) redisTemplate.opsForValue().get("alldocs");
-        if(null == list){
-            list = docMapper.getDocs();
-            redisTemplate.opsForValue().set("alldocs", list);
+    public List<DocEntity> getdocs(String title){
+        if(title == null){
+            List<DocEntity> list = (List<DocEntity>) redisTemplate.opsForValue().get("alldocs");
+            if(null == list){
+                list = docMapper.getDocs();
+                redisTemplate.opsForValue().set("alldocs", list);
+            }
+            return list;
+        }else{
+            System.out.println("doc title get");
+            List<DocEntity> list= (List<DocEntity>) redisTemplate.opsForValue().get(title);
+            if(list == null){
+                list = docMapper.getDocByTitle(title);
+                if(list.size()!=0)
+                {redisTemplate.opsForValue().set(title,list.get(0));}
+            }
+            return list;
         }
-        return list;
     }
-    @RequestMapping("/doc/delete?{title}")
+    @RequestMapping("/doc/delete")
     public Ope_Result deleteDoc(String title){
         Ope_Result ope = new Ope_Result();
         if (docMapper.getDocByTitle(title)!=null) {
             docMapper.deleteDocByTitle(title);
-            redisTemplate.delete(title);//缓存、数据库一致
+            if(redisTemplate.opsForValue().get(title)!=null) {
+                redisTemplate.delete(title);//缓存、数据库一致
+            }
             ope.setCode(200);
             ope.setMessage("delete success");
             return ope;
@@ -56,14 +59,14 @@ public class DocController {
     @PostMapping("/doc/add")
     public Ope_Result addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
         Ope_Result ope = new Ope_Result();
-        if(docMapper.getDocByTitle(title)!=null){
+        if(docMapper.getDocByTitle(title).size()!=0){
             ope.setCode(400);
             ope.setMessage("DOC_EXISTED");
             return ope;
         }else{
             long date = new Date().getTime();
             docMapper.insertIntoDoc(title,paragraph,date); //更新数据库
-            DocEntity docEntity = docMapper.getDocByTitle(title);
+            DocEntity docEntity = docMapper.getDocByTitle(title).get(0);
             redisTemplate.opsForValue().set(title, docEntity); //更新缓存
             List<DocEntity> list = (List<DocEntity>)docMapper.getDocs();
             redisTemplate.opsForValue().set("alldocs",list);
@@ -81,10 +84,9 @@ public class DocController {
             ope.setMessage("DOC_NOT_FOUND");
             return ope;
         }else{
-            docMapper.deleteDocByTitle(title);
             long date = new Date().getTime();
-            docMapper.insertIntoDoc(title,paragraph,date);
-            DocEntity docEntity = docMapper.getDocByTitle(title);
+            docMapper.UpdateDoc(title,paragraph,date);
+            DocEntity docEntity = docMapper.getDocByTitle(title).get(0);
             redisTemplate.opsForValue().set(title,docEntity);
             List<DocEntity> list = (List<DocEntity>)docMapper.getDocs();
             redisTemplate.opsForValue().set("alldocs",list);
