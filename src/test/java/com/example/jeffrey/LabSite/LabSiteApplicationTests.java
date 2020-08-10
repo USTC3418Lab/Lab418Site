@@ -15,7 +15,7 @@ class LabSiteApplicationTests {
 
 	@Test
 	public void testProperties(){
-		System.out.println(stringEncryptor.encrypt("123"));
+		System.out.println(stringEncryptor.encrypt("123456"));
 	}
 
 }
