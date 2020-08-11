@@ -8,7 +8,7 @@ sudo docker container stop lab418-redis
 sudo docker container rm lab418-site
 sudo docker container rm lab418-mysql
 sudo docker container rm lab418-redis
-sudo docker image rm lab418-mysql-img
+sudo docker image rm lab418-mysql-img:latest
 
 echo '容器与镜像已删除，继续?(ctrl+c结束)'
 read a
@@ -27,11 +27,15 @@ cp -rf build/* ../src/main/resources/static/
 echo '退出frontend/'            # /
 cd ../ 
 
+echo '清理后端打包文件'
+./mvnw clean -f ./pom.xml
+
 echo '开始打包后端'
 ./mvnw package -f ./pom.xml
 
 echo '拷贝打包后的文件'
-cp target/LabSite-0.0.1-SNAPSHOT.war deploy/lab418.war
+rm deploy/lab418.war
+cp -f target/LabSite-0.0.1-SNAPSHOT.war deploy/lab418.war
 
 echo '进入deploy/'
 cd deploy/                   # /deploy
@@ -40,4 +44,4 @@ echo '创建mysql镜像'
 sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./
 
 echo '开始执行docker-compose'
-sudo docker-compose up
+sudo docker-compose up --build

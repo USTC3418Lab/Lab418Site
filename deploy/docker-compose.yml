@@ -1,16 +1,5 @@
 version: "3"
 services: 
-    mysql:
-        # need to build first : [ sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./ ]
-        image: lab418-mysql-img:latest
-        ports: 
-            - 13306:3306
-        container_name: lab418-mysql
-    redis:
-        image: "redis:alpine"
-        ports: 
-            - 16379:6379
-        container_name: lab418-redis
     webapp:
         build:
             context: ./
@@ -18,4 +7,17 @@ services:
         ports: 
             - 8080:8080
         container_name: lab418-site
-        
+        links: 
+            - mysql:lab418mysql
+            - redis:lab418redis
+    mysql:
+        # need to build first : [ sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./ ]
+        image: lab418-mysql-img:latest
+        # ports: 
+        #     - 13306:3306
+        container_name: lab418-mysql
+    redis:
+        image: "redis:alpine"
+        # ports: 
+        #     - 16379:6379
+        container_name: lab418-redis
