@@ -1,7 +1,14 @@
 #!/bin/bash
 
+# todo 备份和回复MySQL中存储的文件，可以使用挂载方式
+echo '此操作会删除所有已部署的容器，包括mysql和redis，确定继续？(ctrl+c退出)'
+read a
+
+echo '请确保在deploy/文件夹中执行次脚本，继续？(ctrl+c退出)'
+read b
+
 # 可能会失败，但忽略
-echo '停止并删除已创建容器'
+echo '执行docker-compose down，停止并删除已创建容器'
 # sudo docker container stop lab418-site
 # sudo docker container stop lab418-mysql
 # sudo docker container stop lab418-redis
@@ -11,8 +18,8 @@ echo '停止并删除已创建容器'
 # sudo docker image rm lab418-mysql-img:latest
 sudo docker-compose down
 
-echo '容器与镜像已删除，继续?(ctrl+c结束)'
-read a
+echo '容器与镜像已删除，开始部署?(ctrl+c结束)'
+read c
 
 set -e
 set -u

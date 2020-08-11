@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { Layout, Card, Popconfirm, Empty, message } from 'antd';
 import '../styles/doc.css';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { mockClient } from '../client';
+import { client } from '../client';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export default class DocPage extends Component {
     }
 
     init() {
-        mockClient.getDoc()
+        client.getDoc()
             .then(docs => {
                 this.setState({ "docs": docs });
             })
@@ -35,7 +35,7 @@ export default class DocPage extends Component {
     }
     deleteCard(index, event) {
         console.log("index: ", index, ", target: ", event.target);
-        mockClient.deleteDoc(this.state.docs[index].title)
+        client.deleteDoc(this.state.docs[index].title)
             .then((data) => {
                 if (data.code === 200)
                     message.info("删除成功");

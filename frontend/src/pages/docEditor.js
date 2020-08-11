@@ -7,8 +7,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/markdown/markdown';
 import '../styles/docEditor.css'
-import { mockClient } from '../client';
-import { useHistory } from 'react-router-dom';
+import { client } from '../client';
 const { Header } = Layout;
 
 export default class DocEditor extends Component {
@@ -27,6 +26,7 @@ export default class DocEditor extends Component {
         this.onInputTitleTextChange = this.onInputTitleTextChange.bind(this);
         this.updateDoc = this.updateDoc.bind(this);
         this.addDoc = this.addDoc.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
 
     onEditorTextChange(editor, data, value) { this.setState({ editorContent: value }); }
@@ -34,15 +34,17 @@ export default class DocEditor extends Component {
     onInputTitleTextChange(ev) { this.setState({ inputTitle: ev.target.value }); }
 
     addDoc() {
-        mockClient.addDoc(this.state.inputTitle, this.state.editorContent)
+        client.addDoc(this.state.inputTitle, this.state.editorContent)
             .then(data => {
-                if (data.code === 200)
+                if (data.code === 200) {
                     message.info("添加成功");
+                    this.goBack();
+                }
                 else if (data.code === 400)
                     message.warn("添加失败 - 已存在同标题信息");
                 else
                     message.warn("添加失败 - 服务器错误");
-                // todo go back here
+                this.goBack();
             })
             .catch(v => {
                 console.error(v);
@@ -51,15 +53,16 @@ export default class DocEditor extends Component {
     }
 
     updateDoc() {
-        mockClient.updateDoc(this.state.inputTitle, this.state.editorContent)
+        client.updateDoc(this.state.inputTitle, this.state.editorContent)
             .then(data => {
-                if (data.code === 200)
+                if (data.code === 200) {
                     message.info("更新成功");
+                    this.goBack();
+                }
                 else if (data.code === 401)
                     message.warn("更新失败 - 信息不存在");
                 else
                     message.warn("更新失败 - 服务器错误");
-                useHistory().goBack();
             })
             .catch(v => {
                 console.error(v);
@@ -67,16 +70,13 @@ export default class DocEditor extends Component {
             });
     }
 
-    cancelUpdate() {
-        // useHistory().goBack();
-        // todo go back here
-    }
+    goBack() { this.props.history.goBack(); }
 
     render() {
         var buttonText = "添加";
         if (this.state.typeUpdating) buttonText = "更新";
         const cancelButton = this.state.typeUpdating ?
-            <Button onClick={this.cancelUpdate} type="primary" className="editor-button">
+            <Button onClick={this.goBack} type="primary" className="editor-button">
                 取消
             </Button> : null;
 

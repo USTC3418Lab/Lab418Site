@@ -45,7 +45,7 @@ function makeFormBody(paras) {
     return body;
 }
 
-export const mockClient = {
+export const client = {
     getDoc() {
         return new Promise((resolve, reject) => {
             axios.get("/doc").then(resp => {
