@@ -2,13 +2,14 @@
 
 # 可能会失败，但忽略
 echo '停止并删除已创建容器'
-sudo docker container stop lab418-site
-sudo docker container stop lab418-mysql
-sudo docker container stop lab418-redis
-sudo docker container rm lab418-site
-sudo docker container rm lab418-mysql
-sudo docker container rm lab418-redis
-sudo docker image rm lab418-mysql-img:latest
+# sudo docker container stop lab418-site
+# sudo docker container stop lab418-mysql
+# sudo docker container stop lab418-redis
+# sudo docker container rm lab418-site
+# sudo docker container rm lab418-mysql
+# sudo docker container rm lab418-redis
+# sudo docker image rm lab418-mysql-img:latest
+sudo docker-compose down
 
 echo '容器与镜像已删除，继续?(ctrl+c结束)'
 read a
@@ -40,8 +41,8 @@ cp -f target/LabSite-0.0.1-SNAPSHOT.war deploy/lab418.war
 echo '进入deploy/'
 cd deploy/                   # /deploy
 
-echo '创建mysql镜像'
-sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./
+# echo '创建mysql镜像'
+# sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./
 
-echo '开始执行docker-compose'
-sudo docker-compose up --build
+echo '开始执行docker-compose，后台模式'
+sudo docker-compose up -d --build

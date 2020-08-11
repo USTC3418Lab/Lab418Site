@@ -47,7 +47,7 @@ export const mockClient = {
     },
     deleteDoc(title) {
         return new Promise((resolve, reject) => {
-            axios.post("/delete?title=" + title)
+            axios.post("/doc/delete?title=" + title)
                 .then(resp => {
                     if (resp.status === 200)
                         resolve(resp.data);
@@ -58,7 +58,18 @@ export const mockClient = {
     },
     updateDoc(title, paragraph) {
         return new Promise((resolve, reject) => {
-            axios.post('/update', { title: title, paragraph: paragraph })
+            axios.post('/doc/update', { title: title, paragraph: paragraph })
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve(resp.data);
+                    else reject(resp.statusText);
+                })
+                .catch(v => reject(v));
+        });
+    },
+    addDoc(title, paragraph) {
+        return new Promise((resolve, reject) => {
+            axios.post('/doc/add', { title: title, paragraph: paragraph })
                 .then(resp => {
                     if (resp.status === 200)
                         resolve(resp.data);
