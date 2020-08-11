@@ -34,6 +34,17 @@ const axios = require('axios').default;
 //     }
 // };
 
+function makeFormBody(paras) {
+    var body = new FormData();
+    for (const key in paras) {
+        if (paras.hasOwnProperty(key)) {
+            const value = paras[key];
+            body.set(key, value.toString());
+        }
+    }
+    return body;
+}
+
 export const mockClient = {
     getDoc() {
         return new Promise((resolve, reject) => {
@@ -47,7 +58,7 @@ export const mockClient = {
     },
     deleteDoc(title) {
         return new Promise((resolve, reject) => {
-            axios.post("/delete?title=" + title)
+            axios.get("/doc/delete?title=" + title)
                 .then(resp => {
                     if (resp.status === 200)
                         resolve(resp.data);
@@ -58,13 +69,28 @@ export const mockClient = {
     },
     updateDoc(title, paragraph) {
         return new Promise((resolve, reject) => {
-            axios.post('/update', { title: title, paragraph: paragraph })
-                .then(resp => {
-                    if (resp.status === 200)
-                        resolve(resp.data);
-                    else reject(resp.statusText);
-                })
-                .catch(v => reject(v));
+            axios.post(
+                '/doc/update',
+                makeFormBody({ title: title, paragraph: paragraph }),
+                { headers: { 'Content-Type': 'multipart/form-data' } }
+            ).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else reject(resp.statusText);
+            }).catch(v => reject(v));
+        });
+    },
+    addDoc(title, paragraph) {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/doc/add',
+                makeFormBody({ title: title, paragraph: paragraph }),
+                { headers: { 'Content-Type': 'multipart/form-data' } }
+            ).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else reject(resp.statusText);
+            }).catch(v => reject(v));
         });
     }
 };

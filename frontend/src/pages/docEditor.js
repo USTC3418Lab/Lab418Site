@@ -8,6 +8,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/mode/markdown/markdown';
 import '../styles/docEditor.css'
 import { mockClient } from '../client';
+import { useHistory } from 'react-router-dom';
 const { Header } = Layout;
 
 export default class DocEditor extends Component {
@@ -28,16 +29,25 @@ export default class DocEditor extends Component {
         this.addDoc = this.addDoc.bind(this);
     }
 
-    onEditorTextChange(editor, data, value) {
-        this.setState({ editorContent: value });
-    }
+    onEditorTextChange(editor, data, value) { this.setState({ editorContent: value }); }
 
-    onInputTitleTextChange(ev) {
-        this.setState({ inputTitle: ev.target.value });
-    }
+    onInputTitleTextChange(ev) { this.setState({ inputTitle: ev.target.value }); }
 
     addDoc() {
-        // todo add doc
+        mockClient.addDoc(this.state.inputTitle, this.state.editorContent)
+            .then(data => {
+                if (data.code === 200)
+                    message.info("添加成功");
+                else if (data.code === 400)
+                    message.warn("添加失败 - 已存在同标题信息");
+                else
+                    message.warn("添加失败 - 服务器错误");
+                // todo go back here
+            })
+            .catch(v => {
+                console.error(v);
+                message.error("添加失败");
+            });
     }
 
     updateDoc() {
@@ -45,6 +55,8 @@ export default class DocEditor extends Component {
             .then(data => {
                 if (data.code === 200)
                     message.info("更新成功");
+                else if (data.code === 401)
+                    message.warn("更新失败 - 信息不存在");
                 else
                     message.warn("更新失败 - 服务器错误");
                 // todo go back here
@@ -56,12 +68,17 @@ export default class DocEditor extends Component {
     }
 
     cancelUpdate() {
+        // useHistory().goBack();
         // todo go back here
     }
 
     render() {
         var buttonText = "添加";
         if (this.state.typeUpdating) buttonText = "更新";
+        const cancelButton = this.state.typeUpdating ?
+            <Button onClick={this.cancelUpdate} type="primary" className="editor-button">
+                取消
+            </Button> : null;
 
         return <Layout className="doc-editor">
             <Header className="editor-header header">
@@ -72,13 +89,7 @@ export default class DocEditor extends Component {
                     className="editor-button">
                     {buttonText}
                 </Button>
-                {this.state.typeUpdating ?
-                    <Button
-                        onClick={this.cancelUpdate}
-                        type="primary"
-                        className="editor-button">
-                        取消
-                </Button> : null}
+                {cancelButton}
             </Header>
             <Layout className="editor-holder">
                 <CodeMirror

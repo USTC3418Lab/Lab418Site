@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class DocEntity implements Serializable {
     private String title;
-    private String paragragh;
+    private String paragraph;
     private Long timestamp;
 
     public String getTitle() {
@@ -15,12 +15,12 @@ public class DocEntity implements Serializable {
         this.title = title;
     }
 
-    public String getParagragh() {
-        return paragragh;
+    public String getParagraph() {
+        return paragraph;
     }
 
-    public void setParagragh(String paragragh) {
-        this.paragragh = paragragh;
+    public void setParagraph(String paragraph) {
+        this.paragraph = paragraph;
     }
 
     public Long getTimestamp() {
@@ -35,7 +35,7 @@ public class DocEntity implements Serializable {
     public String toString() {
         return "DocEntity{" +
                 "title='" + title + '\'' +
-                ", paragragh='" + paragragh + '\'' +
+                ", paragraph='" + paragraph + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

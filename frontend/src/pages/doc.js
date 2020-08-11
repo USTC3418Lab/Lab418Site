@@ -22,7 +22,6 @@ export default class DocPage extends Component {
     init() {
         mockClient.getDoc()
             .then(docs => {
-                console.log("getDoc, docs: ", docs);
                 this.setState({ "docs": docs });
             })
             .catch(reason => {

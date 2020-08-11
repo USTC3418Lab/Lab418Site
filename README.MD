@@ -18,9 +18,9 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
 
 
 ## 已确定接口
-| 接口名           | 方法 | 参数 | 返回值                            |
-| ---------------- | ---- | ---- | --------------------------------- |
-| 获取所有常用信息 | GET  | title   | `[{title, paragraph, timestamp}]` |
+| 接口名           | 方法 | 参数  | 返回值                            |
+| ---------------- | ---- | ----- | --------------------------------- |
+| 获取所有常用信息 | GET  | title | `[{title, paragraph, timestamp}]` |
 
 
 ## 已完成功能
@@ -39,13 +39,12 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
     - 说明: 使用GET请求获取所有信息，展示时根据时间戳由大到小排列文章。修改时直接POST整个，修改后更新时间戳
 
 ### 已确定接口
-| 接口名           | 方法 | 参数 | 返回值                            |
-| ---------------- | ---- | ---- | --------------------------------- |
-| 获取所有常用信息 | GET  | 无   | `[{title, paragraph, timestamp}]` |
-| 获取单个常用信息 | GET | title | `{title, paragraph, timestamp}` |
-| 删除某一常用信息 | GET | title | `{code, message}` |
-| 增加常用信息 | POST | {title,paragraph} | `{code,message}` |
-| 修改常用信息 | POST | {title,paragraph} | `{code,message}` |
+| 接口名                 | 路径        | 方法 | 参数              | 返回值                            |
+| ---------------------- | ----------- | ---- | ----------------- | --------------------------------- |
+| 获取某个或所有常用信息 | /doc        | GET  | title             | `[{title, paragraph, timestamp}]` |
+| 删除某一常用信息       | /doc/delete | GET  | title             | `{code, message}`                 |
+| 增加常用信息           | /doc/add    | POST | {title,paragraph} | `{code,message}`                  |
+| 修改常用信息           | /doc/update | POST | {title,paragraph} | `{code,message}`                  |
 
 ## 已完成功能
 - 接口:获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
@@ -54,4 +53,6 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
 - 接口:修改某一信息 `/doc/update POST`  {title,paragraph} 修改成功为200，不存在返回401
 - 添加redis缓存
 
-- UI：卡片式，正文：标题+段落，右上角：时间戳+编辑按钮+删除按钮，按钮以icon形式展示
+- UI: 卡片式，标题+markdown段落+时间戳
+- UI: markdown编辑器完成，使用`CodeMirror+react-markdown`实现
+- UI: 编辑、更新信息完成

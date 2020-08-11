@@ -20,7 +20,7 @@ const path2All = {
     mapper: {
         "/index.html": { page: HomePage, menuIndex: 0, title: "首页" },
         "/": { page: HomePage, menuIndex: 0, title: "首页" },
-        "/page/doc": { page: DocPage, menuIndex: 1, title: "添加信息", fatherTitle: "实验室常用信息" },
+        "/page/doc": { page: DocPage, menuIndex: 1, title: "所有信息", fatherTitle: "实验室常用信息" },
         "/page/doc-editor": { page: DocEditor, menuIndex: 2, title: "添加信息" },
         "/page/clipboard": { page: ClipboardPage, menuIndex: 3, title: "剪贴板" },
         "/page/doc-update": { page: DocEditor, menuIndex: 1, title: "" },
