@@ -59,7 +59,7 @@ export default class DocEditor extends Component {
                     message.warn("更新失败 - 信息不存在");
                 else
                     message.warn("更新失败 - 服务器错误");
-                // todo go back here
+                useHistory().goBack();
             })
             .catch(v => {
                 console.error(v);
