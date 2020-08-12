@@ -1,9 +1,7 @@
 package com.example.jeffrey.LabSite.Controller;
-import com.example.jeffrey.LabSite.Entity.DocEntity;
 import com.example.jeffrey.LabSite.Entity.Ope_Result;
+import com.example.jeffrey.LabSite.Entity.DocEntity;
 import com.example.jeffrey.LabSite.Mapper.DocMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,7 @@ public class DocController {
     @Autowired
     private RedisTemplate<Object,Object> redisTemplate;
     @RequestMapping("/doc")
-    public List<DocEntity> getdocs(String title) throws JsonProcessingException {
+    public List<DocEntity> getdocs(String title)  {
         if(title == null){
             List<DocEntity> list = new ArrayList<DocEntity>();
             if(redisTemplate.opsForHash().size("alldocs") == 0){
@@ -33,7 +31,7 @@ public class DocController {
             else{
                 Map<Object,Object> map = redisTemplate.opsForHash().entries("alldocs");
                 for(Object tit:map.keySet()){
-                    DocEntity doc = transObjectToDoc(map.get(tit));
+                    DocEntity doc = (DocEntity) map.get(tit);
                     list.add(doc);
                 }
             }
@@ -121,13 +119,4 @@ public class DocController {
 //            System.out.println(doc_entity);
 //        }
 //    }
-
-    DocEntity transObjectToDoc(Object ob) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonInfo = objectMapper.writeValueAsString(ob);
-        System.out.println(jsonInfo);
-        DocEntity doc_entity = objectMapper.readValue(jsonInfo,DocEntity.class);
-        System.out.println(doc_entity);
-        return doc_entity;
-    }
 }
