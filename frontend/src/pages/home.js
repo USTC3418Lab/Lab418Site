@@ -13,7 +13,7 @@ export default class HomePage extends Component {
                     <span>418实验室内部网站</span>
                     <br />
                     <span>I have an idea -- </span>
-                    <a href="https://github.com/USTCNoZeng418Lab/Lab418Site" target="_">我要参与</a>
+                    <a href="https://github.com/USTC3418Lab/Lab418Site" target="_">我要参与</a>
                     <br />
                     <br />
                     <span>开发人员</span>
