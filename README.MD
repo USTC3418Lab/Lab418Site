@@ -1,6 +1,15 @@
 # Lab418实验室网站
 
-USTC网络安全实验室网站代码，采用SpringBoot编写，
+USTC网络安全实验室网站代码，采用SpringBoot+React编写
+
+## 添加功能
+
+**请按照如下步骤添加功能，不要直接push！**
+
+1. 提issue描述功能，确定前端、后端的设计与实现，确定前后端接口
+2. fork之后在**自己fork的项目**中完成编码与开发，并同步更新REAME.MD
+3. 给**本项目**提交Pull request，由至少一个人review后，approve或request changes继续修改
+4. 合并，处理冲突（如果有），完成
 
 ## 功能列表
 - 常用信息展示
