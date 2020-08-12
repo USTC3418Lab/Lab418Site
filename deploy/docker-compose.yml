@@ -17,6 +17,8 @@ services:
             dockerfile: mysql.dockerfile
         image: mysql:lab418
         container_name: lab418-mysql
+        volumes: 
+            - /lab418/mysql/data:/var/lib/mysql
         # ports: 
         #     - 13306:3306
     redis:

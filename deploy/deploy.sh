@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # todo 备份和回复MySQL中存储的文件，可以使用挂载方式
-echo '此操作会删除所有已部署的容器，包括mysql和redis，确定继续？(ctrl+c退出)'
+echo '此操作会删除所有已部署的容器，包括mysql和redis，确定继续?(ctrl+c退出)'
 read a
 
 echo '请确保在deploy/文件夹中执行次脚本，继续？(ctrl+c退出)'
@@ -27,10 +27,10 @@ set -u
 echo '进入项目根目录'
 cd ../                        # /
 
-echo '打包前端?(y继续, ctrl+c退出)'
-read d
-if [ $d == 'y' ]; then
-    echo '正在进入frontend/'
+# echo '打包前端?(y继续, ctrl+c退出)'
+# read d
+# if [ $d == 'y' ]; then
+    echo '进入frontend/'
     cd frontend/                 # frontend/
 
     echo '开始执行npm run build'
@@ -40,18 +40,17 @@ if [ $d == 'y' ]; then
 
     echo '退出frontend/'            # /
     cd ../ 
-fi
+# fi
 
-echo '打包后端?(y继续, ctrl+c退出)'
-read e
-
-if [ $e == 'y' ]; then
+# echo '打包后端?(y继续, ctrl+c退出)'
+# read e
+# if [ $e == 'y' ]; then
     echo '清理后端打包文件'
     ./mvnw clean -f ./pom.xml
 
     echo '开始打包后端'
     ./mvnw package -f ./pom.xml
-fi
+# fi
 
 
 echo '拷贝打包后的文件'

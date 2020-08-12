@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Layout } from 'antd';
 import './styles/App.css';
 import SiderMenu from './SiderMenu';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import DocEditor from './pages/docEditor';
 import ClipboardPage from './pages/clipboard';
 import DocPage from './pages/doc';
@@ -11,11 +11,8 @@ import HomePage from './pages/home';
 
 const { Header, Sider } = Layout;
 
-export function AppWrapper() {
-    return <App pathName={useLocation().pathname} />;
-}
-
 const pathList = ["/", "/page/doc", "/page/doc-editor", "/page/clipboard", "/page/doc-update"];
+
 const path2All = {
     mapper: {
         "/index.html": { page: HomePage, menuIndex: 0, title: "首页" },
@@ -35,7 +32,6 @@ const path2All = {
 
 export default class App extends Component {
     render() {
-        var menuSelectedIndex = path2All.getIndexByPath(this.props.pathName) || 0;
         return (
             <Layout className="app">
                 <Sider className="sider" >
@@ -47,9 +43,9 @@ export default class App extends Component {
                             Lab&nbsp;3418
                         </Link>
                     </Header>
-                    <SiderMenu
-                        menuSelectedIndex={menuSelectedIndex}
-                        path2All={path2All} />
+                    <Route path={'/'} render={(routeProps ) => (
+                        <SiderMenu {...routeProps} path2All={path2All} />
+                    )} />
                 </Sider>
                 <Layout className="app-body">
                     <Switch>

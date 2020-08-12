@@ -15,7 +15,6 @@ export default class DocPage extends Component {
 
         this.state = { docs: null, serviceAvailable: true };
         this.init = this.init.bind(this);
-        this.onEdit = this.onEdit.bind(this);
         this.deleteCard = this.deleteCard.bind(this);
     }
 
@@ -30,11 +29,7 @@ export default class DocPage extends Component {
             });
     }
 
-    onEdit(index, event) {
-        console.log("index: ", index, ", target: ", event.target);
-    }
     deleteCard(index, event) {
-        console.log("index: ", index, ", target: ", event.target);
         client.deleteDoc(this.state.docs[index].title)
             .then((data) => {
                 if (data.code === 200)
@@ -56,7 +51,6 @@ export default class DocPage extends Component {
                         index={index}
                         doc={doc}
                         deleteCard={this.deleteCard}
-                        onEdit={this.onEdit}
                     />
                 ))}
             </>);
@@ -87,13 +81,7 @@ class DocCard extends Component {
         super(props);
         this.state = { doc: props.doc, index: props.index }
 
-        this.onEdit = this.onEdit.bind(this);
         this.deleteCard = this.deleteCard.bind(this);
-    }
-
-    onEdit(event) {
-        if (this.props.onEdit)
-            this.props.onEdit(this.state.index, event);
     }
 
     deleteCard(event) {
