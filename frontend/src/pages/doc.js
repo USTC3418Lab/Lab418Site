@@ -14,14 +14,16 @@ export default class DocPage extends Component {
         super(props);
 
         this.state = { docs: null, serviceAvailable: true };
-        this.init = this.init.bind(this);
+        this.updateDocs = this.updateDocs.bind(this);
         this.deleteCard = this.deleteCard.bind(this);
+        this.generateCards = this.generateCards.bind(this);
     }
 
-    init() {
+    updateDocs() {
         client.getDoc()
             .then(docs => {
-                this.setState({ "docs": docs });
+                const sortedDocs = docs.sort((a, b) => (b.timestamp - a.timestamp));
+                this.setState(() => ({ "docs": sortedDocs }));
             })
             .catch(reason => {
                 message.error("获取常用信息失败: " + reason);
@@ -30,30 +32,37 @@ export default class DocPage extends Component {
     }
 
     deleteCard(index, event) {
-        client.deleteDoc(this.state.docs[index].title)
+        const titleToDelete = this.state.docs[index].title;
+        client.deleteDoc(titleToDelete)
             .then((data) => {
-                if (data.code === 200)
+                if (data.code === 200) {
                     message.info("删除成功");
+                    this.setState((prevState) => {
+                        var newDocs = Object.assign([], prevState.docs);
+                        newDocs.splice(index, 1);
+                        return { docs: newDocs };
+                    });
+                }
                 else
                     message.warn("删除失败 - 服务器错误");
             })
             .catch((reason) => message.error("删除失败"));
     }
 
-    componentDidMount() { this.init(); }
+    componentDidMount() { this.updateDocs(); }
+
+    generateCards(docs) {
+        return <>
+            {docs.map((doc, index) => (<DocCard
+                key={"DocCard" + index}
+                index={index}
+                doc={doc}
+                deleteCard={this.deleteCard}
+            />))}
+        </>
+    }
 
     render() {
-        const generateCards = (docs) => (
-            <>
-                {docs.map((doc, index) => (
-                    <DocCard
-                        key={"DocCard" + index}
-                        index={index}
-                        doc={doc}
-                        deleteCard={this.deleteCard}
-                    />
-                ))}
-            </>);
         var contentElement;
         if (!this.state.serviceAvailable) {
             contentElement = <Content className="doc-content">
@@ -63,7 +72,7 @@ export default class DocPage extends Component {
             if (!this.state.docs || this.state.docs.length === 0)
                 contentElement = <Empty description="无数据" className="doc-empty" />;
             else
-                contentElement = generateCards(this.state.docs || []);
+                contentElement = this.generateCards(this.state.docs || []);
         }
         return (
             <Layout className="doc">
@@ -79,14 +88,16 @@ export default class DocPage extends Component {
 class DocCard extends Component {
     constructor(props) {
         super(props);
-        this.state = { doc: props.doc, index: props.index }
+
+        this.doc = props.doc;
+        this.index = props.index;
 
         this.deleteCard = this.deleteCard.bind(this);
     }
 
     deleteCard(event) {
         if (this.props.deleteCard)
-            this.props.deleteCard(this.state.index, event);
+            this.props.deleteCard(this.index, event);
     }
 
     timeStamp2Str(timeStamp) {
@@ -95,8 +106,9 @@ class DocCard extends Component {
     }
 
     render() {
-        const doc = this.state.doc;
-        const index = this.state.index;
+        const doc = this.props.doc;
+        const index = this.props.index;
+
         return <Card
             key={"docCard" + index}
             className="doc-card"

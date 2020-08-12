@@ -15,13 +15,21 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
 ## 进行中的功能
 - 容器化部署: 使用docker部署
 
-### 已确定接口
+## 已确定接口
 | 接口名                 | 路径        | 方法 | 参数              | 返回值                            |
 | ---------------------- | ----------- | ---- | ----------------- | --------------------------------- |
 | 获取某个或所有常用信息 | /doc        | GET  | title             | `[{title, paragraph, timestamp}]` |
 | 删除某一常用信息       | /doc/delete | GET  | title             | `{code, message}`                 |
 | 增加常用信息           | /doc/add    | POST | {title,paragraph} | `{code,message}`                  |
 | 修改常用信息           | /doc/update | POST | {title,paragraph} | `{code,message}`                  |
+
+### code,message
+
+| code | message       | explain                              |
+| ---- | ------------- | ------------------------------------ |
+| 400  | DOC_EXISTED   | 添加/更新文档标题冲突                |
+| 401  | DOC_NOT_FOUND | 更新文档失败，文档未找到(可能已删除) |
+| 200  | SUCCESS       | 操作正常                             |
 
 ## 已完成功能
 
@@ -30,7 +38,7 @@ USTC网络安全实验室网站代码，采用SpringBoot编写，
 -----
 
 - 接口:获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
-- 接口:删除某一常用信息  `/doc/delete?title={} GET`,删除成功时code为200，删除失败code返回500
+- 接口:删除某一常用信息  `/doc/delete?title={} GET`,删除成功时code为200，删除失败code返回400
 - 接口:增加常用信息 `/doc/add POST` {title,paragraph} 添加成功返回200，如果已存在返回400
 - 接口:修改某一信息 `/doc/update POST`  {title,paragraph} 修改成功为200，不存在返回401
 - 添加redis缓存

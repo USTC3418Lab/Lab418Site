@@ -58,12 +58,12 @@ public class DocController {
                 redisTemplate.opsForHash().delete("alldocs",title);
             }
             ope.setCode(200);
-            ope.setMessage("delete success");
+            ope.setMessage("SUCCESS");
             return ope;
         }
         else{
-            ope.setMessage("text not exists");
-            ope.setCode(400);
+            ope.setMessage("DOC_NOT_FOUND");
+            ope.setCode(401);
             return ope;
         }
     }
