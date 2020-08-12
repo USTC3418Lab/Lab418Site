@@ -4,6 +4,13 @@ public class Ope_Result {
     private int code;
     private String message;
 
+    public Ope_Result(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+    public Ope_Result(){
+
+    }
     public int getCode() {
         return code;
     }

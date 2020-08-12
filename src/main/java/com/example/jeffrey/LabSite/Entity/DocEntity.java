@@ -7,6 +7,15 @@ public class DocEntity implements Serializable {
     private String paragraph;
     private Long timestamp;
 
+    public DocEntity(String title, String paragraph, Long timestamp) {
+        this.title = title;
+        this.paragraph = paragraph;
+        this.timestamp = timestamp;
+    }
+    public DocEntity(){
+
+    }
+
     public String getTitle() {
         return title;
     }
