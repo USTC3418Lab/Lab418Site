@@ -5,15 +5,6 @@ import { Link } from 'react-router-dom'
 const { SubMenu } = Menu;
 
 export default class SiderMenu extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            theme: 'light',
-            current: props.menuSelectedIndex.toString() || '0'
-        };
-
-    }
 
     handleClick = e => this.setState({ current: e.key });
 
@@ -22,10 +13,10 @@ export default class SiderMenu extends Component {
         return (
             <>
                 <Menu
-                    theme={this.state.theme}
+                    theme={'light'}
                     onClick={this.handleClick}
                     defaultOpenKeys={['sub1']}
-                    selectedKeys={[this.state.current]}
+                    selectedKeys={path2All.getIndexByPath(this.props.location.pathname).toString() || '0'}
                     mode="inline" >
                     <Menu.Item key="0">
                         <Link to={path2All.getPath(0)}>{path2All.getTitle(0)}</Link>

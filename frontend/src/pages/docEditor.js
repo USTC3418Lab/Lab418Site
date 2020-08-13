@@ -38,13 +38,12 @@ export default class DocEditor extends Component {
             .then(data => {
                 if (data.code === 200) {
                     message.info("添加成功");
-                    this.goBack();
+                    this.props.history.push('/page/doc');
                 }
                 else if (data.code === 400)
                     message.warn("添加失败 - 已存在同标题信息");
                 else
                     message.warn("添加失败 - 服务器错误");
-                this.goBack();
             })
             .catch(v => {
                 console.error(v);
