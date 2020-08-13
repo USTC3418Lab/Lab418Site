@@ -2,7 +2,6 @@ package com.example.jeffrey.LabSite.Utils;
 
 
 import com.example.jeffrey.LabSite.Entity.ConferenceSearch.Paper;
-import com.example.jeffrey.LabSite.Entity.ConferenceSearch.ReponsePaper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,6 +39,7 @@ public class StaticHtmlCrawler {
                         String href = con.attr("href");
                         if(href.contains("https://dblp.uni-trier.de/db/")){
                             System.out.println(href);
+                            System.out.println(con.text());
                             String con_name=""; //记录会议名
                             Document document1 = Jsoup.connect(href).get();
                             Elements elements_href = document1.select("div#breadcrumbs.section");
@@ -47,7 +47,7 @@ public class StaticHtmlCrawler {
                             int len = elements_span.size();
                             Element element1_href = elements_span.get(len-1);
                             System.out.println(element1_href.text());
-                            Paper paper1 = new Paper(title.text(),element1_href.text());
+                            Paper paper1 = new Paper(title.text(),element1_href.text(),con.text());
                             list.add(paper1);
                         }
                     }
@@ -58,28 +58,32 @@ public class StaticHtmlCrawler {
         }
         return list;
     }
-    public static List<String> getABCByPaper(String paper){
-        List<String> list = new ArrayList<>();
+    public static List<Paper> getABCByPaper(String paper){
+        List<Paper> list = new ArrayList<>();
         List<Paper> list_papers = getConByPaper(paper);
         for (Paper pp :
                 list_papers) {
             String con = pp.getCon();
+            System.out.println("con:"+con);
             for (String a :
                     a_deg) {
                 if (a.equals(con)){
-                    list.add("A类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"A类");
+                    list.add(p);
                 }
             }
             for (String b :
                     b_deg) {
                 if (b.equals(con)){
-                    list.add("B类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"B类");
+                    list.add(p);
                 }
             }
             for (String c :
                     c_deg) {
                 if (c.equals(con)){
-                    list.add("C类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"C类");
+                    list.add(p);
                 }
             }
         }
