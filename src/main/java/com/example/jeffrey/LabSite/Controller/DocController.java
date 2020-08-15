@@ -1,5 +1,5 @@
 package com.example.jeffrey.LabSite.Controller;
-import com.example.jeffrey.LabSite.Entity.Ope_Result;
+import com.example.jeffrey.LabSite.Entity.OpeResult;
 import com.example.jeffrey.LabSite.Entity.DocEntity;
 import com.example.jeffrey.LabSite.Mapper.DocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class DocController {
             return list;
         }else{
             System.out.println("doc title get");
-            List<DocEntity> list= (List<DocEntity>) redisTemplate.opsForHash().get("alldocs",title);
+            List<DocEntity> list= (List<DocEntity>) redisTemplate.opsForHash().get("alldocs",title);;
             if(list == null){
                 list = docMapper.getDocByTitle(title);
                 if(list.size()!=0) {
@@ -50,8 +50,8 @@ public class DocController {
         }
     }
     @RequestMapping("/doc/delete")
-    public Ope_Result deleteDoc(String title){
-        Ope_Result ope = new Ope_Result();
+    public OpeResult deleteDoc(String title){
+        OpeResult ope = new OpeResult();
         if (docMapper.getDocByTitle(title).size() !=0) {
             docMapper.deleteDocByTitle(title);
             if(redisTemplate.opsForHash().get("alldocs",title)!=null){
@@ -68,8 +68,8 @@ public class DocController {
         }
     }
     @PostMapping("/doc/add")
-    public Ope_Result addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
-        Ope_Result ope = new Ope_Result();
+    public OpeResult addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
+        OpeResult ope = new OpeResult();
         if(docMapper.getDocByTitle(title).size()!=0){
             ope.setCode(400);
             ope.setMessage("DOC_EXISTED");
@@ -86,8 +86,8 @@ public class DocController {
     }
 
     @PostMapping("/doc/update")
-    public Ope_Result updateDoc(@RequestParam("title")String title,@RequestParam("paragraph")String paragraph){
-        Ope_Result ope = new Ope_Result();
+    public OpeResult updateDoc(@RequestParam("title")String title,@RequestParam("paragraph")String paragraph){
+        OpeResult ope = new OpeResult();
         if(docMapper.getDocByTitle(title).size() == 0){
             ope.setCode(401);
             ope.setMessage("DOC_NOT_FOUND");

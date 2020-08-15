@@ -12,7 +12,7 @@ export default class SiderMenu extends Component {
         const path2All = this.props.path2All;
         return (
             <>
-                <Menu
+                <Menu siderCollapsed
                     theme={'light'}
                     onClick={this.handleClick}
                     defaultOpenKeys={['sub1']}
@@ -31,6 +31,9 @@ export default class SiderMenu extends Component {
                     </SubMenu>
                     <Menu.Item key="3">
                         <Link to={path2All.getPath(3)}>{path2All.getTitle(3)}</Link>
+                    </Menu.Item>
+                    <Menu.Item key="4">
+                        <Link to={path2All.getPath(4)}>{path2All.getTitle(4)}</Link>
                     </Menu.Item>
                 </Menu>
             </>

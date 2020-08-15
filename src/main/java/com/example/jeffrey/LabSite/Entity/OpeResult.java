@@ -1,14 +1,14 @@
 package com.example.jeffrey.LabSite.Entity;
 
-public class Ope_Result {
+public class OpeResult {
     private int code;
     private String message;
 
-    public Ope_Result(int code, String message) {
+    public OpeResult(int code, String message) {
         this.code = code;
         this.message = message;
     }
-    public Ope_Result(){
+    public OpeResult(){
 
     }
     public int getCode() {

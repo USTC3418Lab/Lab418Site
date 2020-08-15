@@ -18,21 +18,21 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
   - 删除
 - 剪贴板
 - 文件库 - 临时/永久
-- 身份认证，系统
+- 身份认证
 - 富文本编辑器
 
-## 进行中的功能
-- 容器化部署: 使用docker部署
-
 ## 已确定接口
-| 接口名                 | 路径        | 方法 | 参数              | 返回值                            |
-| ---------------------- | ----------- | ---- | ----------------- | --------------------------------- |
-| 获取某个或所有常用信息 | /doc        | GET  | title             | `[{title, paragraph, timestamp}]` |
-| 删除某一常用信息       | /doc/delete | GET  | title             | `{code, message}`                 |
-| 增加常用信息           | /doc/add    | POST | {title,paragraph} | `{code,message}`                  |
-| 修改常用信息           | /doc/update | POST | {title,paragraph} | `{code,message}`                  |
+| 接口名                 | 路径              | 方法 | 参数              | 返回值                            |
+| ---------------------- | ----------------- | ---- | ----------------- | --------------------------------- |
+| 获取某个或所有常用信息 | /doc              | GET  | title             | `[{title, paragraph, timestamp}]` |
+| 删除某一常用信息       | /doc/delete       | GET  | title             | `{code, message}`                 |
+| 增加常用信息           | /doc/add          | POST | {title,paragraph} | `{code,message}`                  |
+| 修改常用信息           | /doc/update       | POST | {title,paragraph} | `{code,message}`                  |
+| 剪贴板-获取历史记录    | /clipboard        | GET  |                   | `[{id, text, timestamp}]`         |
+| 剪贴板-删除记录        | /clipboard/delete | GET  | id(long)          | `{code, message}`                 |
+| 剪贴板-添加记录        | /clipboard/add    | POST | text(str)         | `{code, message}`                 |
 
-### code,message
+## code,message
 
 | code | message       | explain                              |
 | ---- | ------------- | ------------------------------------ |
@@ -43,13 +43,14 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 ## 已完成功能
 
 - 功能: 常用信息展示
-
------
-
-- 接口:获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
-- 接口:删除某一常用信息  `/doc/delete?title={} GET`,删除成功时code为200，删除失败code返回400
-- 接口:增加常用信息 `/doc/add POST` {title,paragraph} 添加成功返回200，如果已存在返回400
-- 接口:修改某一信息 `/doc/update POST`  {title,paragraph} 修改成功为200，不存在返回401
+  - 获取所有常用信息  `/doc GET [doc]` &`/doc?title={} GET [doc]`
+  - 删除某一常用信息  `/doc/delete?title={} GET`,删除成功时code为200，删除失败code返回400
+  - 增加常用信息 `/doc/add POST` {title,paragraph} 添加成功返回200，如果已存在返回400
+  - 修改某一信息 `/doc/update POST`  {title,paragraph} 修改成功为200，不存在返回401
+- 功能: 剪贴板-文本分享
+  - 获取剪贴板历史记录，返回JSON数组
+  - 删除记录，成功200，否则400
+  - 添加记录，成功200，否则400
 - 添加redis缓存
 
 -----
