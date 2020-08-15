@@ -22,6 +22,7 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 - 富文本编辑器
 
 ## 已确定接口
+
 | 接口名                 | 路径              | 方法 | 参数              | 返回值                            |
 | ---------------------- | ----------------- | ---- | ----------------- | --------------------------------- |
 | 获取某个或所有常用信息 | /doc              | GET  | title             | `[{title, paragraph, timestamp}]` |
@@ -31,8 +32,10 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 | 剪贴板-获取历史记录    | /clipboard        | GET  |                   | `[{id, text, timestamp}]`         |
 | 剪贴板-删除记录        | /clipboard/delete | GET  | id(long)          | `{code, message}`                 |
 | 剪贴板-添加记录        | /clipboard/add    | POST | text(str)         | `{code, message}`                 |
+| 获取论文评级          | /ccf?paper={} | GET | paper | `[{title,con_abbr,conference,degree}]` |
 
 ## code,message
+
 
 | code | message       | explain                              |
 | ---- | ------------- | ------------------------------------ |
@@ -52,13 +55,24 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
   - 删除记录，成功200，否则400
   - 添加记录，成功200，否则400
 - 添加redis缓存
-
+- 接口:根据论文名查找评级 `/ccf?paper={}` 返回可能的评级列表,`[{title,con_abbr,conference,degree}]`
 -----
 
 - UI: 卡片式，标题+markdown段落+时间戳
 - UI: markdown编辑器完成，使用`CodeMirror+react-markdown`实现
 - UI: 编辑、更新信息完成
 
+## 数据库设计
+- 文档数据库 doc
+
+| 字段  | 类型 | 主键 | 是否为空 | 说明|
+| ---------------------- | ----------- | ---- | ----------------- | --------------------------------- |
+| title |   Varchar | 是  | 不能 | 文档标题 |
+| paragraph | Text |   |              | 文档内容 |
+| timestamp | Long |  |  | 时间戳,ms单位 |
+
+
 ## 数据库文件
 
 部署时会将`/lab418/mysql/data`挂载到数据库容器内的`/var/lib/mysql`下
+
