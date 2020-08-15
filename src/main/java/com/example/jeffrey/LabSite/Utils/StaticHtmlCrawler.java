@@ -63,26 +63,26 @@ public class StaticHtmlCrawler {
         List<Paper> list_papers = getConByPaper(paper);
         for (Paper pp :
                 list_papers) {
-            String con = pp.getCon();
+            String con = pp.getCon_abbr();
             System.out.println("con:"+con);
             for (String a :
                     a_deg) {
                 if (a.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"A类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"A类");
                     list.add(p);
                 }
             }
             for (String b :
                     b_deg) {
                 if (b.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"B类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"B类");
                     list.add(p);
                 }
             }
             for (String c :
                     c_deg) {
                 if (c.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon(),pp.getConference(),"C类");
+                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"C类");
                     list.add(p);
                 }
             }
