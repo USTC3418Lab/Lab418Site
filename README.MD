@@ -31,7 +31,7 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 | 删除某一常用信息       | /doc/delete | GET  | title             | `{code, message}`                 |
 | 增加常用信息           | /doc/add    | POST | {title,paragraph} | `{code,message}`                  |
 | 修改常用信息           | /doc/update | POST | {title,paragraph} | `{code,message}`                  |
-
+| 获取论文评级          | /ccf?paper={} | GET | paper | `[{title,con_abbr,conference,degree}]` |
 ### code,message
 
 | code | message       | explain                              |
@@ -51,13 +51,24 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 - 接口:增加常用信息 `/doc/add POST` {title,paragraph} 添加成功返回200，如果已存在返回400
 - 接口:修改某一信息 `/doc/update POST`  {title,paragraph} 修改成功为200，不存在返回401
 - 添加redis缓存
-
+- 接口:根据论文名查找评级 `/ccf?paper={}` 返回可能的评级列表,`[{title,con_abbr,conference,degree}]`
 -----
 
 - UI: 卡片式，标题+markdown段落+时间戳
 - UI: markdown编辑器完成，使用`CodeMirror+react-markdown`实现
 - UI: 编辑、更新信息完成
 
+## 数据库设计
+- 文档数据库 doc
+
+| 字段  | 类型 | 主键 | 是否为空 | 说明|
+| ---------------------- | ----------- | ---- | ----------------- | --------------------------------- |
+| title |   Varchar | 是  | 不能 | 文档标题 |
+| paragraph | Text |   |              | 文档内容 |
+| timestamp | Long |  |  | 时间戳,ms单位 |
+
+
 ## 数据库文件
 
 部署时会将`/lab418/mysql/data`挂载到数据库容器内的`/var/lib/mysql`下
+
