@@ -35,11 +35,11 @@ class LabSiteApplicationTests {
 //		System.out.println(getConByPaper2("Vetting USB Device Firmware using Domain Informed Symbolic Execution"));
 //	}
 //
-//	@Test
-//	public void TestGetCon(){
-//		System.out.println(getConByPaper2("Vetting USB Device Firmware using Domain Informed Symbolic Execution"));
-//	}
-//
+	@Test
+	public void TestGetCon(){
+		System.out.println(getConByPaper2("Vetting USB Device Firmware using Domain Informed Symbolic Execution"));
+	}
+
 //	@Test
 //	public void cutString(){
 //		System.out.println(cutStringByChar("https://dblp.uni-trier.de/db/conf/ccs/ccs2017.html#KolesnikovNRTT17",'/'));

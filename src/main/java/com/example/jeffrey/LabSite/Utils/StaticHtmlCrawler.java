@@ -32,14 +32,20 @@ public class StaticHtmlCrawler {
                 Elements temp = element.select("cite.data");
                 Elements title = temp.select("span.title");
                 if(title.text().length()!=0){
-                    System.out.println("title"+title.text());
+                    System.out.println("title::"+title.text());
                     Elements cons = temp.select("a");
                     for (Element con :
                             cons) {
                         String href = con.attr("href");
                         if(href.contains("https://dblp.uni-trier.de/db/")){
-                            href = cutStringByChar(href,'/');
-                            Paper paper1 = new Paper(title.text(),"http:"+href,con.text());
+                            href = href.replaceAll("https","http");
+                            int index = href.lastIndexOf("/");
+                            if(index == href.length()-1){
+                                href = href;
+                            }else{
+                                href = href.substring(0,index+1);
+                            }
+                            Paper paper1 = new Paper(title.text(),href,con.text());
                             list.add(paper1);
                         }
                     }
@@ -51,41 +57,10 @@ public class StaticHtmlCrawler {
         return list;
     }
 
-    public static String cutStringByChar(String href, char c) {
-        String flag = "";
-        char[] hr ;
-        hr = href.toCharArray();
-        List<Integer> index = new ArrayList<>();
-        int i = 0;
-        System.out.println(hr);
-        while(i<hr.length){
-            if(hr[i]=='/'){
-                index.add(i);
-            }
-            i++;
-        }
-        System.out.println(index);
-        int begin = index.get(0);
-        int end = index.get(index.size()-1);
-        i =0 ;
-        List<Character> result = new ArrayList<>();
-        while(i<hr.length){
-            if(i<=end && i>=begin){
-                result.add(hr[i]);
-            }
-            i++;
-        }
-        StringBuilder str = new StringBuilder();
-        for (Character character :
-                result) {
-            str.append(character);
-        }
-        return str.toString();
-    }
-
     public static List<Paper> getABCByPaper2(String paper){
         List<Paper> list = new ArrayList<>();
         List<Paper> list_papers = getConByPaper2(paper);
+        System.out.println(list_papers);
         for (Paper pp :
                 list_papers) {
             String href = pp.getHref();
