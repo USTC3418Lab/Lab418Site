@@ -89,10 +89,10 @@ public class StaticHtmlCrawler {
         for (Paper pp :
                 list_papers) {
             String href = pp.getHref();
-            System.out.println("href:"+href);
-            System.out.println(a_set);
-            System.out.println(b_set);
-            System.out.println(c_set);
+//            System.out.println("href:"+href);
+//            System.out.println(a_set);
+//            System.out.println(b_set);
+//            System.out.println(c_set);
             if(a_set.contains(href)){
                 Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"A类");
                 list.add(p);
@@ -104,7 +104,7 @@ public class StaticHtmlCrawler {
                 list.add(p);
             }
         }
-        System.out.println(list);
+//        System.out.println(list);
         return list;
     }
 }
