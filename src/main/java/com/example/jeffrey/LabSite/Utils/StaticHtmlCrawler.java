@@ -39,11 +39,9 @@ public class StaticHtmlCrawler {
                         String href = con.attr("href");
                         if(href.contains("https://dblp.uni-trier.de/db/")){
                             href = href.replaceAll("https","http");
-                            int index = href.lastIndexOf("/");
-                            if(index == href.length()-1){
-                                href = href;
-                            }else{
-                                href = href.substring(0,index+1);
+                            if(!href.endsWith("/")){
+                                int index = href.lastIndexOf("/");
+                                href = href.substring(0,index+1);//如果href字符串不是以/结尾
                             }
                             Paper paper1 = new Paper(title.text(),href,con.text());
                             list.add(paper1);
