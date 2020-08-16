@@ -76,7 +76,7 @@ export default class DocPage extends Component {
         }
         return (
             <Layout className="doc">
-                <Header className="header doc-title">实验室常用信息汇总</Header>
+                <Header className="header-text">实验室常用信息汇总</Header>
                 <Content className="doc-content">
                     {contentElement}
                 </Content>

@@ -118,7 +118,7 @@ export default class ClipboardPage extends Component {
         </>;
 
         return <div className="clipboard" onClick={this.hideViewer}>
-            <Header className="header clipboard-title">
+            <Header className="header-text">
                 短文本分享剪贴板
             </Header>
             <Content className="clipboard-content">

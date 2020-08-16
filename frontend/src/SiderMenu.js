@@ -35,6 +35,9 @@ export default class SiderMenu extends Component {
                     <Menu.Item key="4">
                         <Link to={path2All.getPath(4)}>{path2All.getTitle(4)}</Link>
                     </Menu.Item>
+                    <Menu.Item key="5">
+                        <Link to={path2All.getPath(5)}>{path2All.getTitle(5)}</Link>
+                    </Menu.Item>
                 </Menu>
             </>
         );

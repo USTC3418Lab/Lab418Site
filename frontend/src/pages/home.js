@@ -7,7 +7,7 @@ const { Header } = Layout;
 export default class HomePage extends Component {
     render() {
         return <Layout className="homepage">
-            <Header className="header">实验室内部网站</Header>
+            <Header className="header-text">实验室内部网站</Header>
             <div style={{ display: "flex", flex: 1 }}>
                 <span className="homepage-content">
                     <span>418实验室内部网站</span>

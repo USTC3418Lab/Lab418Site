@@ -40,7 +40,7 @@ const mockClient = {
     },
     getClipboardTexts() {
         return new Promise((resolve, reject) => {
-            const tmpLi = [1,2,3,4,5,6,7,8];
+            const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
             const tmpi = Math.floor(Math.random() * tmpLi.length);
             const res = [];
             for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
@@ -61,6 +61,13 @@ const mockClient = {
     addClipboardText(text) {
         return new Promise((resolve, reject) => {
             resolve({ code: 200, message: "SUCCESS" });
+        });
+    },
+    ccfSearch(text) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([{ "title": "Afork()intheroad.", "con_abbr": "HotOS", "conference": "HotOS2019", "degree": "B类" }, { "title": "ThereareTrillionsofLittleForksintheRoad.ChooseWisely!-EstimatingtheCostandLikelihoodofSuccessofConstrainedWalkstoOptimizeaGraphPruningPipeline.", "con_abbr": "SC", "conference": "IA3@SC2018", "degree": "A类" }, { "title": "WhenYouCometoaForkintheRoad,TakeIt:StrategySelectioninOrderEntry.", "con_abbr": "AMIA", "conference": "AMIA2005", "degree": "C类" }, { "title": "Y-Branches:WhenYouCometoaForkintheRoad,TakeIt.", "con_abbr": "PACT", "conference": "IEEEPACT2003", "degree": "B类" }, { "title": "ThereareTrillionsofLittleForksintheRoad.ChooseWisely!-EstimatingtheCostandLikelihoodofSuccessofConstrainedWalkstoOptimizeaGraphPruningPipeline.", "con_abbr": "SC", "conference": "IA3@SC2018", "degree": "A类" }, { "title": "WhenYouCometoaForkintheRoad,TakeIt:StrategySelectioninOrderEntry.", "con_abbr": "AMIA", "conference": "AMIA2005", "degree": "C类" }, { "title": "Y-Branches:WhenYouCometoaForkintheRoad,TakeIt.", "con_abbr": "PACT", "conference": "IEEEPACT2003", "degree": "B类" }]);
+            }, 1000);
         });
     }
 };
@@ -160,6 +167,18 @@ const realClient = {
                 else
                     reject(resp.statusText);
             }).catch(v => reject(v));
+        });
+    },
+    ccfSearch(paper) {
+        return new Promise((resolve, reject) => {
+            axios.get("/ccf?paper=" + paper)
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve(resp.data);
+                    else
+                        reject(resp.statusText)
+                })
+                .catch(reason => reject(reason));
         });
     }
 };

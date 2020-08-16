@@ -13,11 +13,6 @@
     position: relative;
 }
 
-.clipboard-title {
-    padding: 0px var(--gap-common);
-    font-weight: bold;
-}
-
 .clipboard-textare-holder, .clipboard-result-holder {
     padding: var(--gap-common);
     width: 50%;
