@@ -8,10 +8,11 @@ import DocEditor from './pages/docEditor';
 import DocPage from './pages/doc';
 import HomePage from './pages/home';
 import TempCloudDisk from './pages/tempCloudDisk';
+import ClipboardPage from './pages/clipboard';
 
 const { Header, Sider } = Layout;
 
-const pathList = ["/", "/page/doc", "/page/doc-editor", "/page/temp-cloud-disk", "/page/doc-update"];
+const pathList = ["/", "/page/doc", "/page/doc-editor", "/page/temp-cloud-disk", "/page/clipboard", "/page/doc-update"];
 
 const path2All = {
     mapper: {
@@ -20,6 +21,7 @@ const path2All = {
         "/page/doc": { page: DocPage, menuIndex: 1, title: "所有信息", fatherTitle: "实验室常用信息" },
         "/page/doc-editor": { page: DocEditor, menuIndex: 2, title: "添加信息" },
         "/page/temp-cloud-disk": { page: TempCloudDisk, menuIndex: 3, title: "临时网盘" },
+        "/page/clipboard": { page: ClipboardPage, menuIndex: 4, title: "剪贴板" },
         "/page/doc-update": { page: DocEditor, menuIndex: 1, title: "" },
     },
     getPath(index) { return pathList[index] },

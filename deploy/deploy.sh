@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# todo 备份和回复MySQL中存储的文件，可以使用挂载方式
 echo '此操作会删除所有已部署的容器，包括mysql和redis，确定继续?(ctrl+c退出)'
 read a
 
@@ -23,6 +22,9 @@ read c
 
 set -e
 set -u
+
+echo '创建MySQL目录'
+mkdir -p /lab418/mysql/data
 
 echo '进入项目根目录'
 cd ../                        # /

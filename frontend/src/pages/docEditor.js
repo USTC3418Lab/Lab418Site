@@ -8,6 +8,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/mode/markdown/markdown';
 import '../styles/docEditor.css'
 import { client } from '../client';
+import { isStrEmpty } from '../utils';
 const { Header } = Layout;
 
 export default class DocEditor extends Component {
@@ -34,6 +35,10 @@ export default class DocEditor extends Component {
     onInputTitleTextChange(ev) { this.setState({ inputTitle: ev.target.value }); }
 
     addDoc() {
+        if (isStrEmpty(this.state.inputTitle) || isStrEmpty(this.state.editorContent)) {
+            message.warn("标题和段落都不能为空~_~");
+            return;
+        }
         client.addDoc(this.state.inputTitle, this.state.editorContent)
             .then(data => {
                 if (data.code === 200) {

@@ -1,3 +1,5 @@
+import { shuffle } from './utils';
+
 const axios = require('axios').default;
 
 const mock = false;
@@ -34,6 +36,31 @@ const mockClient = {
             const code = 200;
             if (code === 200) resolve({ code: code, message: code2msg[code] });
             else reject({ code: code, message: code2msg[code] });
+        });
+    },
+    getClipboardTexts() {
+        return new Promise((resolve, reject) => {
+            const tmpLi = [1,2,3,4,5,6,7,8];
+            const tmpi = Math.floor(Math.random() * tmpLi.length);
+            const res = [];
+            for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
+                res.push({
+                    id: i,
+                    text: "this " + i + "短文本分享，类似于云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,  mes: 200 SUCCESS, 400 FAIL\n后端我也直接写了吧\n",
+                    timestamp: 1500000000290 + i * 10000000,
+                })
+            }
+            resolve(shuffle(res));
+        });
+    },
+    deleteClipboardText(id) {
+        return new Promise((resolve, reject) => {
+            resolve({ code: 200, message: "SUCCESS" });
+        });
+    },
+    addClipboardText(text) {
+        return new Promise((resolve, reject) => {
+            resolve({ code: 200, message: "SUCCESS" });
         });
     }
 };
@@ -94,6 +121,44 @@ const realClient = {
                 if (resp.status === 200)
                     resolve(resp.data);
                 else reject(resp.statusText);
+            }).catch(v => reject(v));
+        });
+    },
+    getClipboardTexts() {
+        return new Promise((resolve, reject) => {
+            axios.get("/clipboard")
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve(resp.data);
+                    else
+                        reject(resp.statusText);
+                })
+                .catch(reason => reject(reason));
+        });
+    },
+    deleteClipboardText(id) {
+        return new Promise((resolve, reject) => {
+            axios.get("/clipboard/delete?id=" + id)
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve(resp.data);
+                    else
+                        reject(resp.statusText)
+                })
+                .catch(reason => reject(reason));
+        });
+    },
+    addClipboardText(text) {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                "/clipboard/add",
+                makeFormBody({ text: text }),
+                { headers: { 'Content-Type': 'multipart/form-data' } }
+            ).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
             }).catch(v => reject(v));
         });
     }

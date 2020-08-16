@@ -3,6 +3,7 @@ package com.example.jeffrey.LabSite.Entity;
 import java.io.Serializable;
 
 public class DocEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String title;
     private String paragraph;
     private Long timestamp;
