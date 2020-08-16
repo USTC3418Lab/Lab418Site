@@ -46,7 +46,7 @@ export default class ccfSearchPage extends Component {
             })
     }
     render() {
-        var resultList = <Empty className="search-result-empty" description="无数据" />;
+        var resultList = <Empty className="search-result-empty" description="无数据 - ABC都不是🤐" />;
         var searchProgressbar = null;
         if (this.state.searching) {
             searchProgressbar = <Progress
@@ -69,9 +69,8 @@ export default class ccfSearchPage extends Component {
                         className="search-result-card"
                         title={data.title}
                         key={"card" + index}>
-                        <p>会议缩写: {data.con_abbr}</p>
-                        <p>会议名: {data.conference}</p>
-                        <strong>CCF分类: {data.degree}</strong>
+                        <p><a href={data.href} target="_" style={{ fontWeight: "bold" }}>{data.conference}</a></p>
+                        <strong>CCF分类: &nbsp;{data.degree}</strong>
                     </Card>
                 ));
             }

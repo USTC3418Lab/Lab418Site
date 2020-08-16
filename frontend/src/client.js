@@ -66,7 +66,7 @@ const mockClient = {
     ccfSearch(text) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve([{ "title": "Afork()intheroad.", "con_abbr": "HotOS", "conference": "HotOS2019", "degree": "B类" }, { "title": "ThereareTrillionsofLittleForksintheRoad.ChooseWisely!-EstimatingtheCostandLikelihoodofSuccessofConstrainedWalkstoOptimizeaGraphPruningPipeline.", "con_abbr": "SC", "conference": "IA3@SC2018", "degree": "A类" }, { "title": "WhenYouCometoaForkintheRoad,TakeIt:StrategySelectioninOrderEntry.", "con_abbr": "AMIA", "conference": "AMIA2005", "degree": "C类" }, { "title": "Y-Branches:WhenYouCometoaForkintheRoad,TakeIt.", "con_abbr": "PACT", "conference": "IEEEPACT2003", "degree": "B类" }, { "title": "ThereareTrillionsofLittleForksintheRoad.ChooseWisely!-EstimatingtheCostandLikelihoodofSuccessofConstrainedWalkstoOptimizeaGraphPruningPipeline.", "con_abbr": "SC", "conference": "IA3@SC2018", "degree": "A类" }, { "title": "WhenYouCometoaForkintheRoad,TakeIt:StrategySelectioninOrderEntry.", "con_abbr": "AMIA", "conference": "AMIA2005", "degree": "C类" }, { "title": "Y-Branches:WhenYouCometoaForkintheRoad,TakeIt.", "con_abbr": "PACT", "conference": "IEEEPACT2003", "degree": "B类" }]);
+                resolve([{ "title": "A fork() in the road.", "href": "https://github.com/USTC3418Lab/Lab418Site/issues/8", "conference": "HotOS2019", "degree": "B类" }]);
             }, 1000);
         });
     }
