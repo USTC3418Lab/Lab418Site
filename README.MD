@@ -32,7 +32,7 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
 | 剪贴板-获取历史记录    | /clipboard        | GET  |                   | `[{id, text, timestamp}]`         |
 | 剪贴板-删除记录        | /clipboard/delete | GET  | id(long)          | `{code, message}`                 |
 | 剪贴板-添加记录        | /clipboard/add    | POST | text(str)         | `{code, message}`                 |
-| 获取论文评级          | /ccf?paper={} | GET | paper | `[{title,con_abbr,conference,degree}]` |
+| 获取论文评级          | /ccf?paper={} | GET | paper | `[{title,href,conference,degree}]` |
 
 ## code,message
 
@@ -55,7 +55,7 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
   - 删除记录，成功200，否则400
   - 添加记录，成功200，否则400
 - 添加redis缓存
-- 接口:根据论文名查找评级 `/ccf?paper={}` 返回可能的评级列表,`[{title,con_abbr,conference,degree}]`
+- 接口:根据论文名查找评级 `/ccf?paper={}` 返回可能的评级列表,`[{title,href,conference,degree}]`
 -----
 
 - UI: 卡片式，标题+markdown段落+时间戳
