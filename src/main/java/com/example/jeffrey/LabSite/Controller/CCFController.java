@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.getABCByPaper;
+import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.getABCByPaper2;
 
 @RestController
 public class CCFController {
     @RequestMapping("/ccf")
     public List<Paper> getDegree(String paper){
-        return getABCByPaper(paper);
+        return getABCByPaper2(paper);
     }
 }

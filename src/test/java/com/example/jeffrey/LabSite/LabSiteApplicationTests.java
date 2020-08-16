@@ -11,8 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static com.example.jeffrey.LabSite.Utils.PdfOperation.readPDFText;
-import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.getABCByPaper;
-import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.getConByPaper;
+import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,14 +30,18 @@ class LabSiteApplicationTests {
 		PdfOperation operation= new PdfOperation();
 		operation.splitStringByLine(a);
 	}
-
 	@Test
-	public void TestCrawlerFunc(){
-		getConByPaper("Vetting USB Device Firmware using Domain Informed Symbolic Execution");
+	public void testCrawler(){
+		System.out.println(getConByPaper2("Vetting USB Device Firmware using Domain Informed Symbolic Execution"));
 	}
 
 	@Test
-	public void TestABCByPaper(){
-		getABCByPaper("Vetting USB Device Firmware using Domain Informed Symbolic Execution");
+	public void TestGetCon(){
+		System.out.println(getConByPaper2("Vetting USB Device Firmware using Domain Informed Symbolic Execution"));
+	}
+
+	@Test
+	public void cutString(){
+		System.out.println(cutStringByChar("https://dblp.uni-trier.de/db/conf/ccs/ccs2017.html#KolesnikovNRTT17",'/'));
 	}
 }
