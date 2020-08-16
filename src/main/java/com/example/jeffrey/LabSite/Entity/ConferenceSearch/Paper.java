@@ -2,19 +2,22 @@ package com.example.jeffrey.LabSite.Entity.ConferenceSearch;
 
 public class Paper {
     private String title;
-    private String con_abbr;
+    private String href;
     private String conference;
     private String Degree;
 
-    public Paper(String title, String con_abbr, String conference) {
+    public Paper(String title, String href, String conference) {
         this.title = title;
-        this.con_abbr = con_abbr;
+        this.href = href;
         this.conference = conference;
     }
 
-    public Paper(String title, String con_abbr, String conference, String degree) {
+    public Paper() {
+    }
+
+    public Paper(String title, String href, String conference, String degree) {
         this.title = title;
-        this.con_abbr = con_abbr;
+        this.href = href;
         this.conference = conference;
         Degree = degree;
     }
@@ -27,12 +30,12 @@ public class Paper {
         this.title = title;
     }
 
-    public String getCon_abbr() {
-        return con_abbr;
+    public String getHref() {
+        return href;
     }
 
-    public void setCon_abbr(String con_abbr) {
-        this.con_abbr = con_abbr;
+    public void setHref(String href) {
+        this.href = href;
     }
 
     public String getConference() {
@@ -55,8 +58,9 @@ public class Paper {
     public String toString() {
         return "Paper{" +
                 "title='" + title + '\'' +
-                ", con='" + con_abbr + '\'' +
+                ", href='" + href + '\'' +
                 ", conference='" + conference + '\'' +
+                ", Degree='" + Degree + '\'' +
                 '}';
     }
 }

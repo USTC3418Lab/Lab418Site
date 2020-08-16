@@ -7,87 +7,77 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.jeffrey.LabSite.Utils.PdfOperation.*;
 
 public class StaticHtmlCrawler {
-    public static List<Paper> getConByPaper(String paper){
-        List<Paper> list = new ArrayList<Paper>();
-        String dblp_url = "https://dblp.uni-trier.de/search?q=";
+    public static List<Paper> getConByPaper2(String paper){
+        List<Paper> list = new ArrayList<>();
+        String search_url = "https://dblp.uni-trier.de/search/publ/inc?q=";
         if(paper.contains(" ")){
             paper = paper.replaceAll(" ","%20");
         }
-        String index_url = dblp_url + paper;
+        String index_url = search_url+paper;
         System.out.println(index_url);
-        try {
-            Document document= Jsoup.connect(index_url).get();
-            Elements elements = document.select("div.body.hide-body");
-            Elements element_1 = elements.select("ul.publ-list");
-            Elements elements1 = element_1.select("li");
+        try{
+            Document document = Jsoup.connect(index_url).get();
+            Elements elements = document.select("div#main").select("ul.publ-list").select("li");
             for (Element element :
-                    elements1) {
+                    elements) {
                 Elements temp = element.select("cite.data");
                 Elements title = temp.select("span.title");
                 if(title.text().length()!=0){
-                    System.out.println("title"+title.text());
+                    System.out.println("title::"+title.text());
                     Elements cons = temp.select("a");
                     for (Element con :
                             cons) {
                         String href = con.attr("href");
                         if(href.contains("https://dblp.uni-trier.de/db/")){
-                            System.out.println(href);
-                            System.out.println(con.text());
-                            String con_name=""; //记录会议名
-                            Document document1 = Jsoup.connect(href).get();
-                            Elements elements_href = document1.select("div#breadcrumbs.section");
-                            Elements elements_span = elements_href.select("span");
-                            int len = elements_span.size();
-                            Element element1_href = elements_span.get(len-1);
-                            System.out.println(element1_href.text());
-                            Paper paper1 = new Paper(title.text(),element1_href.text(),con.text());
+                            href = href.replaceAll("https","http");
+                            if(!href.endsWith("/")){
+                                int index = href.lastIndexOf("/");
+                                href = href.substring(0,index+1);//如果href字符串不是以/结尾
+                            }
+                            Paper paper1 = new Paper(title.text(),href,con.text());
                             list.add(paper1);
                         }
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
-    public static List<Paper> getABCByPaper(String paper){
+
+    public static List<Paper> getABCByPaper2(String paper){
         List<Paper> list = new ArrayList<>();
-        List<Paper> list_papers = getConByPaper(paper);
+        List<Paper> list_papers = getConByPaper2(paper);
+        System.out.println(list_papers);
         for (Paper pp :
                 list_papers) {
-            String con = pp.getCon_abbr();
-            System.out.println("con:"+con);
-            for (String a :
-                    a_deg) {
-                if (a.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"A类");
-                    list.add(p);
-                }
-            }
-            for (String b :
-                    b_deg) {
-                if (b.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"B类");
-                    list.add(p);
-                }
-            }
-            for (String c :
-                    c_deg) {
-                if (c.equals(con)){
-                    Paper p = new Paper(pp.getTitle(),pp.getCon_abbr(),pp.getConference(),"C类");
-                    list.add(p);
-                }
+            String href = pp.getHref();
+//            System.out.println("href:"+href);
+//            System.out.println(a_set);
+//            System.out.println(b_set);
+//            System.out.println(c_set);
+            if(a_set.contains(href)){
+                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"A类");
+                list.add(p);
+            }else if(b_set.contains(href)){
+                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"B类");
+                list.add(p);
+            }else if (c_set.contains(href)){
+                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"C类");
+                list.add(p);
             }
         }
-        System.out.println(list);
+//        System.out.println(list);
         return list;
     }
 }
