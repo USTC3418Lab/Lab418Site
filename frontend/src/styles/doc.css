@@ -3,11 +3,6 @@
     --gap-common: 20px;
 }
 
-.doc-title{
-    padding: 0px var(--gap-common);
-    font-weight: bold;
-}
-
 .doc-content {
     display: flex;
     flex-direction: row;

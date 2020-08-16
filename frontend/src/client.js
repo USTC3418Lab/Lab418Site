@@ -40,7 +40,7 @@ const mockClient = {
     },
     getClipboardTexts() {
         return new Promise((resolve, reject) => {
-            const tmpLi = [1,2,3,4,5,6,7,8];
+            const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
             const tmpi = Math.floor(Math.random() * tmpLi.length);
             const res = [];
             for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
@@ -61,6 +61,13 @@ const mockClient = {
     addClipboardText(text) {
         return new Promise((resolve, reject) => {
             resolve({ code: 200, message: "SUCCESS" });
+        });
+    },
+    ccfSearch(text) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([{ "title": "A fork() in the road.", "href": "https://github.com/USTC3418Lab/Lab418Site/issues/8", "conference": "HotOS2019", "degree": "B类" }]);
+            }, 1000);
         });
     }
 };
@@ -160,6 +167,18 @@ const realClient = {
                 else
                     reject(resp.statusText);
             }).catch(v => reject(v));
+        });
+    },
+    ccfSearch(paper) {
+        return new Promise((resolve, reject) => {
+            axios.get("/ccf?paper=" + paper)
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve(resp.data);
+                    else
+                        reject(resp.statusText)
+                })
+                .catch(reason => reject(reason));
         });
     }
 };

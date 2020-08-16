@@ -1,13 +1,14 @@
 .app {
     height: 100%;
+    --gap-common: 20px;
 }
 
-.sider, .app-body, .header, .content, .footer, .sider-title {
+.sider, .app-body, .header, .header-text, .content, .footer, .sider-title {
     background-color: whitesmoke;
     color: rgb(2, 10, 20);
 }
 
-.sider, .header, .sider-title {
+.sider, .header, .header-text, .sider-title {
     background-color: white;
 }
 
@@ -15,6 +16,14 @@
     box-shadow: lightgray 0px 0px 12px;
     z-index: 2;
     position: relative;
+}
+
+.header-text {
+    box-shadow: lightgray 0px 0px 12px;
+    z-index: 2;
+    position: relative;
+    padding: 0px var(--gap-common);
+    font-weight: bold;
 }
 
 .sider-title {
