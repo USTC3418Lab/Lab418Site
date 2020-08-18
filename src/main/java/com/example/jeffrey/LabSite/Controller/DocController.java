@@ -1,4 +1,5 @@
 package com.example.jeffrey.LabSite.Controller;
+
 import com.example.jeffrey.LabSite.Entity.OpeResult;
 import com.example.jeffrey.LabSite.Entity.DocEntity;
 import com.example.jeffrey.LabSite.Mapper.DocMapper;
@@ -17,68 +18,70 @@ public class DocController {
     @Autowired
     private DocMapper docMapper;
     @Autowired
-    private RedisTemplate<Object,Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
+
     @RequestMapping("/doc")
-    public List<DocEntity> getdocs(String title)  {
-        if(title == null){
+    public List<DocEntity> getdocs(String title) {
+        if (title == null) {
             List<DocEntity> list = new ArrayList<DocEntity>();
-            if(redisTemplate.opsForHash().size("alldocs") == 0){
+            if (redisTemplate.opsForHash().size("alldocs") == 0) {
                 list = docMapper.getDocs();
-                for(DocEntity item:list){
-                    redisTemplate.opsForHash().put("alldocs",item.getTitle(),item);
+                for (DocEntity item : list) {
+                    redisTemplate.opsForHash().put("alldocs", item.getTitle(), item);
                 }
-            }
-            else{
-                Map<Object,Object> map = redisTemplate.opsForHash().entries("alldocs");
-                for(Object tit:map.keySet()){
+            } else {
+                Map<Object, Object> map = redisTemplate.opsForHash().entries("alldocs");
+                for (Object tit : map.keySet()) {
                     DocEntity doc = (DocEntity) map.get(tit);
                     list.add(doc);
                 }
             }
 //            List<DocEntity> list = (List<DocEntity>)
             return list;
-        }else{
+        } else {
             System.out.println("doc title get");
-            List<DocEntity> list= (List<DocEntity>) redisTemplate.opsForHash().get("alldocs",title);;
-            if(list == null){
+            List<DocEntity> list = (List<DocEntity>) redisTemplate.opsForHash().get("alldocs", title);
+            ;
+            if (list == null) {
                 list = docMapper.getDocByTitle(title);
-                if(list.size()!=0) {
-                    redisTemplate.opsForHash().put("alldocs",title,list.get(0));
+                if (list.size() != 0) {
+                    redisTemplate.opsForHash().put("alldocs", title, list.get(0));
                 }
             }
             return list;
         }
     }
+
     @RequestMapping("/doc/delete")
-    public OpeResult deleteDoc(String title){
+    public OpeResult deleteDoc(String title) {
         OpeResult ope = new OpeResult();
-        if (docMapper.getDocByTitle(title).size() !=0) {
+        if (docMapper.getDocByTitle(title).size() != 0) {
             docMapper.deleteDocByTitle(title);
-            if(redisTemplate.opsForHash().get("alldocs",title)!=null){
-                redisTemplate.opsForHash().delete("alldocs",title);
+            if (redisTemplate.opsForHash().get("alldocs", title) != null) {
+                redisTemplate.opsForHash().delete("alldocs", title);
             }
             ope.setCode(200);
             ope.setMessage("SUCCESS");
             return ope;
-        }
-        else{
+        } else {
             ope.setMessage("DOC_NOT_FOUND");
             ope.setCode(401);
             return ope;
         }
     }
+
     @PostMapping("/doc/add")
-    public OpeResult addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph){
+    public OpeResult addDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph) {
         OpeResult ope = new OpeResult();
-        if(docMapper.getDocByTitle(title).size()!=0){
+        if (docMapper.getDocByTitle(title).size() != 0) {
             ope.setCode(400);
             ope.setMessage("DOC_EXISTED");
             return ope;
-        }else{
+        } else {
             long date = new Date().getTime();
-            docMapper.insertIntoDoc(title,paragraph,date); //更新数据库
-            DocEntity docEntity  = new DocEntity(title,paragraph,date);
-            redisTemplate.opsForHash().put("alldocs",title,docEntity); //更新缓存
+            docMapper.insertIntoDoc(title, paragraph, date); //更新数据库
+            DocEntity docEntity = new DocEntity(title, paragraph, date);
+            redisTemplate.opsForHash().put("alldocs", title, docEntity); //更新缓存
             ope.setCode(200);
             ope.setMessage("SUCCESS");
             return ope;
@@ -86,17 +89,17 @@ public class DocController {
     }
 
     @PostMapping("/doc/update")
-    public OpeResult updateDoc(@RequestParam("title")String title,@RequestParam("paragraph")String paragraph){
+    public OpeResult updateDoc(@RequestParam("title") String title, @RequestParam("paragraph") String paragraph) {
         OpeResult ope = new OpeResult();
-        if(docMapper.getDocByTitle(title).size() == 0){
+        if (docMapper.getDocByTitle(title).size() == 0) {
             ope.setCode(401);
             ope.setMessage("DOC_NOT_FOUND");
             return ope;
-        }else{
+        } else {
             long date = new Date().getTime();
-            docMapper.UpdateDoc(title,paragraph,date);
+            docMapper.UpdateDoc(title, paragraph, date);
             DocEntity docEntity = docMapper.getDocByTitle(title).get(0);
-            redisTemplate.opsForHash().put("alldocs",title,docEntity);
+            redisTemplate.opsForHash().put("alldocs", title, docEntity);
             ope.setCode(200);
             ope.setMessage("SUCCESS");
             return ope;

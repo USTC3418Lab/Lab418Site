@@ -3,7 +3,7 @@
     --gap-common: 20px;
 }
 
-.doc-title{
+.doc-title {
     padding: 0px var(--gap-common);
     font-weight: bold;
 }

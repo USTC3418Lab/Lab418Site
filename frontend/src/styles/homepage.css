@@ -4,7 +4,7 @@
     --gap-common: 20px;
 }
 
-.homepage>.header {
+.homepage > .header {
     padding: 0px var(--gap-common);
     font-weight: bold;
 }
