@@ -1,0 +1,19 @@
+.cloud-disk-content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.directory-tree {
+    background-color: rgb(245, 245, 245);
+    padding: var(--gap-common);
+    flex: 9;
+    overflow: auto;
+}
+
+.upload-holder {
+    height: fit-content;
+    flex: 9;
+    padding: var(--gap-common);
+    display: block;
+}

@@ -2,7 +2,7 @@ import { shuffle } from './utils';
 
 const axios = require('axios').default;
 
-const mock = false;
+const mock = true;
 
 const code2msg = {
     200: "SUCCESS",
@@ -40,17 +40,19 @@ const mockClient = {
     },
     getClipboardTexts() {
         return new Promise((resolve, reject) => {
-            const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
-            const tmpi = Math.floor(Math.random() * tmpLi.length);
-            const res = [];
-            for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
-                res.push({
-                    id: i,
-                    text: "this " + i + "短文本分享，类似于云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,  mes: 200 SUCCESS, 400 FAIL\n后端我也直接写了吧\n",
-                    timestamp: 1500000000290 + i * 10000000,
-                })
-            }
-            resolve(shuffle(res));
+            setTimeout(() => {
+                const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
+                const tmpi = Math.floor(Math.random() * tmpLi.length);
+                const res = [];
+                for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
+                    res.push({
+                        id: i,
+                        text: "this " + i + "短文本分享，类似于云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,  mes: 200 SUCCESS, 400 FAIL\n后端我也直接写了吧\n",
+                        timestamp: 1500000000290 + i * 10000000,
+                    })
+                }
+                resolve(shuffle(res));
+            }, 1000);
         });
     },
     deleteClipboardText(id) {
@@ -67,6 +69,41 @@ const mockClient = {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve([{ "title": "A fork() in the road.", "href": "https://github.com/USTC3418Lab/Lab418Site/issues/8", "conference": "HotOS2019", "degree": "B类" }]);
+            }, 1000);
+        });
+    },
+    makeDir(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    downloadFile(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    uploadFiles(fileList) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    deleteFile(file) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    getFileTree() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "OK", data: [{ title: 'parent0', key: '0', children: [{ title: 'leaf0-0', key: '0-0', isLeaf: true }, { title: 'leaf0-1', key: '0-1', isLeaf: true }, { title: 'parent0-1', key: '0-2', children: [{ title: 'leaf1-0', key: '0-2-0', isLeaf: true }, { title: 'leaf1-1', key: '0-2-1', isLeaf: true },], },], }, { title: 'parent1', key: '1', children: [{ title: 'leaf1-0', key: '1-0', isLeaf: true }, { title: 'leaf1-1', key: '1-1', isLeaf: true }] }, { title: "child2222", key: '2', isLeaf: true }] });
             }, 1000);
         });
     }
