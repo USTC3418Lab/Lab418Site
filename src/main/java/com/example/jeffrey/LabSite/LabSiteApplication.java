@@ -1,7 +1,11 @@
 package com.example.jeffrey.LabSite;
 
+import com.example.jeffrey.LabSite.Service.StorageService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 import static com.example.jeffrey.LabSite.Utils.PdfOperation.initDegreeSet;
 
@@ -12,5 +16,4 @@ public class LabSiteApplication {
         SpringApplication.run(LabSiteApplication.class, args);
         initDegreeSet();
     }
-
 }
