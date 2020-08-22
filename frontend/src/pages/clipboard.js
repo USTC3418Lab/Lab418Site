@@ -33,6 +33,8 @@ export default class ClipboardPage extends Component {
 
     componentDidMount() { this.getClipboardTexts(); }
 
+    componentWillUnmount() { this.setState = (state) => { return } }
+
     getClipboardTexts() {
         client.getClipboardTexts()
             .then(data => this.setState({

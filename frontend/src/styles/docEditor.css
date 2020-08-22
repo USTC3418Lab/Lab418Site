@@ -33,12 +33,14 @@
 
 .editor-codemirror {
     margin-right: calc(var(--gap-common) / 2);
+    overflow: auto;
 }
 
 .editor-preview {
     padding: calc(var(--gap-common) / 2);
     border: 1px solid gray;
     margin-left: calc(var(--gap-common) / 2);
+    overflow: auto;
 }
 
 .CodeMirror {

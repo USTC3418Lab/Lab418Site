@@ -63,6 +63,8 @@ export default class TempCloudDisk extends Component {
 
     componentDidMount() { this.getFileTree() }
 
+    componentWillUnmount() { this.setState = (state) => { return } }
+
     getFileTree() {
         client.getFileTree()
             .then(data => {
