@@ -86,7 +86,7 @@ const mockClient = {
             }, 1000);
         });
     },
-    uploadFiles(fileList) {
+    uploadFile(file) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({ code: 200, message: "SUCCESS" });
@@ -103,7 +103,32 @@ const mockClient = {
     getFileTree() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve({ code: 200, message: "OK", data: [{ title: 'parent0', key: '0', children: [{ title: 'leaf0-0', key: '0-0', isLeaf: true }, { title: 'leaf0-1', key: '0-1', isLeaf: true }, { title: 'parent0-1', key: '0-2', children: [{ title: 'leaf1-0', key: '0-2-0', isLeaf: true }, { title: 'leaf1-1', key: '0-2-1', isLeaf: true },], },], }, { title: 'parent1', key: '1', children: [{ title: 'leaf1-0', key: '1-0', isLeaf: true }, { title: 'leaf1-1', key: '1-1', isLeaf: true }] }, { title: "child2222", key: '2', isLeaf: true }] });
+                const childNum = Math.floor(Math.random() * 10) + 2;
+                var children = [];
+                for (let i = 0; i < childNum; i++) {
+                    children.push(
+                        {
+                            title: 'child-folder-' + i,
+                            key: '0-' + i,
+                            isLeaf: false,
+                            children: [
+                                {
+                                    title: 'a-' + i + '.txt',
+                                    key: '0-' + i + '-0',
+                                    isLeaf: true,
+                                    children: null
+                                },
+                                {
+                                    title: 'b-' + i + '.txt',
+                                    key: '0-' + i + '-1',
+                                    isLeaf: true,
+                                    children: null
+                                }
+                            ]
+                        }
+                    );
+                }
+                resolve({ code: 200, message: "OK", data: [{ title: 'root-folder', key: '0', isLeaf: false, children: children }] });
             }, 1000);
         });
     }

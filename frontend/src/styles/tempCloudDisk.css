@@ -4,11 +4,15 @@
     height: 100%;
 }
 
-.directory-tree {
+.directory-tree-holder {
     background-color: rgb(245, 245, 245);
     padding: var(--gap-common);
     flex: 9;
     overflow: auto;
+}
+
+.directory-tree {
+    background-color: inherit;
 }
 
 .upload-holder {
