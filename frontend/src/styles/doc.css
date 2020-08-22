@@ -1,0 +1,29 @@
+.doc {
+    overflow: hidden;
+    --gap-common: 20px;
+}
+
+.doc-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.doc-card {
+    margin: var(--gap-common);
+    max-width: 30%;
+    height: fit-content;
+    transition: all 300ms ease;
+}
+
+.doc-card:hover {
+    box-shadow: rgb(192, 192, 192) 1px 1px 24px;
+}
+
+.doc-error-div, .doc-empty {
+    flex: 1;
+    height: fit-content;
+    align-self: center;
+    text-align: center;
+}
