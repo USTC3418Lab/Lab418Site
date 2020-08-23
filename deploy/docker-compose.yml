@@ -1,28 +1,28 @@
 version: "3.3"
-services:
-  webapp:
-    build:
-      context: ./
-      dockerfile: server.dockerfile
-    image: webapp:lab418
-    ports:
-      - 8080:8080
-    container_name: lab418-site
-    links:
-      - mysql:lab418mysql
-      - redis:lab418redis
-  mysql:
-    build:
-      context: ./
-      dockerfile: mysql.dockerfile
-    image: mysql:lab418
-    container_name: lab418-mysql
-    volumes:
-      - /lab418/mysql/data:/var/lib/mysql
-    # ports:
-    #     - 13306:3306
-  redis:
-    image: "redis:alpine"
-    container_name: lab418-redis
-    # ports:
-    #     - 16379:6379
+services: 
+    webapp:
+        build: 
+            context: ./
+            dockerfile: server.dockerfile
+        image: webapp:lab418
+        ports: 
+            - 8080:8080
+        container_name: lab418-site
+        links: 
+            - mysql:lab418mysql
+            - redis:lab418redis
+    mysql:
+        build: 
+            context: ./
+            dockerfile: mysql.dockerfile
+        image: mysql:lab418
+        container_name: lab418-mysql
+        volumes: 
+            - /lab418/mysql/data:/var/lib/mysql
+        # ports: 
+        #     - 13306:3306
+    redis:
+        image: "redis:alpine"
+        container_name: lab418-redis
+        # ports: 
+        #     - 16379:6379
