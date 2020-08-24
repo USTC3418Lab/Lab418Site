@@ -1,5 +1,6 @@
 package com.example.jeffrey.LabSite;
 
+import com.example.jeffrey.LabSite.Entity.Dir;
 import com.example.jeffrey.LabSite.Utils.PdfOperation;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.example.jeffrey.LabSite.Utils.PdfOperation.readPDFText;
 import static com.example.jeffrey.LabSite.Utils.StaticHtmlCrawler.*;
@@ -44,4 +52,8 @@ class LabSiteApplicationTests {
 //	public void cutString(){
 //		System.out.println(cutStringByChar("https://dblp.uni-trier.de/db/conf/ccs/ccs2017.html#KolesnikovNRTT17",'/'));
 //	}
+//    @Test
+//    public void testScanDir() throws IOException {
+//    }
+
 }

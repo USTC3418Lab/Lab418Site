@@ -16,34 +16,34 @@ import java.util.List;
 import static com.example.jeffrey.LabSite.Utils.PdfOperation.*;
 
 public class StaticHtmlCrawler {
-    public static List<Paper> getConByPaper2(String paper){
+    public static List<Paper> getConByPaper2(String paper) {
         List<Paper> list = new ArrayList<>();
         String search_url = "https://dblp.uni-trier.de/search/publ/inc?q=";
-        if(paper.contains(" ")){
-            paper = paper.replaceAll(" ","%20");
+        if (paper.contains(" ")) {
+            paper = paper.replaceAll(" ", "%20");
         }
-        String index_url = search_url+paper;
+        String index_url = search_url + paper;
         System.out.println(index_url);
-        try{
+        try {
             Document document = Jsoup.connect(index_url).get();
             Elements elements = document.select("div#main").select("ul.publ-list").select("li");
             for (Element element :
                     elements) {
                 Elements temp = element.select("cite.data");
                 Elements title = temp.select("span.title");
-                if(title.text().length()!=0){
-                    System.out.println("title::"+title.text());
+                if (title.text().length() != 0) {
+                    System.out.println("title::" + title.text());
                     Elements cons = temp.select("a");
                     for (Element con :
                             cons) {
                         String href = con.attr("href");
-                        if(href.contains("https://dblp.uni-trier.de/db/")){
-                            href = href.replaceAll("https","http");
-                            if(!href.endsWith("/")){
+                        if (href.contains("https://dblp.uni-trier.de/db/")) {
+                            href = href.replaceAll("https", "http");
+                            if (!href.endsWith("/")) {
                                 int index = href.lastIndexOf("/");
-                                href = href.substring(0,index+1);//如果href字符串不是以/结尾
+                                href = href.substring(0, index + 1);//如果href字符串不是以/结尾
                             }
-                            Paper paper1 = new Paper(title.text(),href,con.text());
+                            Paper paper1 = new Paper(title.text(), href, con.text());
                             list.add(paper1);
                         }
                     }
@@ -55,7 +55,7 @@ public class StaticHtmlCrawler {
         return list;
     }
 
-    public static List<Paper> getABCByPaper2(String paper){
+    public static List<Paper> getABCByPaper2(String paper) {
         List<Paper> list = new ArrayList<>();
         List<Paper> list_papers = getConByPaper2(paper);
         System.out.println(list_papers);
@@ -66,14 +66,14 @@ public class StaticHtmlCrawler {
 //            System.out.println(a_set);
 //            System.out.println(b_set);
 //            System.out.println(c_set);
-            if(a_set.contains(href)){
-                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"A类");
+            if (a_set.contains(href)) {
+                Paper p = new Paper(pp.getTitle(), pp.getHref(), pp.getConference(), "A类");
                 list.add(p);
-            }else if(b_set.contains(href)){
-                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"B类");
+            } else if (b_set.contains(href)) {
+                Paper p = new Paper(pp.getTitle(), pp.getHref(), pp.getConference(), "B类");
                 list.add(p);
-            }else if (c_set.contains(href)){
-                Paper p = new Paper(pp.getTitle(),pp.getHref(),pp.getConference(),"C类");
+            } else if (c_set.contains(href)) {
+                Paper p = new Paper(pp.getTitle(), pp.getHref(), pp.getConference(), "C类");
                 list.add(p);
             }
         }

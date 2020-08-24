@@ -13,7 +13,8 @@ public class DocEntity implements Serializable {
         this.paragraph = paragraph;
         this.timestamp = timestamp;
     }
-    public DocEntity(){
+
+    public DocEntity() {
 
     }
 

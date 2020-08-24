@@ -8,9 +8,11 @@ public class OpeResult {
         this.code = code;
         this.message = message;
     }
-    public OpeResult(){
+
+    public OpeResult() {
 
     }
+
     public int getCode() {
         return code;
     }
