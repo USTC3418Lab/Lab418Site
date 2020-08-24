@@ -6,7 +6,6 @@ import com.example.jeffrey.LabSite.Service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,13 +46,6 @@ public class NetworkDiskController {
         opeResult = storageService.newDir(filepath);
         return opeResult;
     }
-    @PostMapping("/cloud-disk/removedir")
-    @ResponseBody
-    public OpeResult deleteDirectory(@RequestParam("dirpath")String dirpath){
-        OpeResult opeResult;
-        opeResult = storageService.deleteDir(dirpath);
-        return opeResult;
-    }
     @GetMapping("/cloud-disk/download")
     public ResponseEntity downloadFile(@RequestParam("filepath") String filepath) throws IOException {
         FileSystemResource file = storageService.loadFileAsResource(filepath);
@@ -79,9 +67,7 @@ public class NetworkDiskController {
     @GetMapping("/cloud-disk")
     @ResponseBody
     public List<Dir> getContent(){
-        List<Dir> dirs = new ArrayList<>();
-        dirs = storageService.getContent();
-        return dirs;
+        return storageService.getContent();
     }
 
 }

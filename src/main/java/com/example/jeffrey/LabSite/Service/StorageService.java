@@ -30,7 +30,6 @@ public class StorageService {
         OpeResult opeResult = new OpeResult();
         try{
             Path location = Paths.get(basepath + File.separator + relative_path + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-            System.out.println(location);
             Files.copy(file.getInputStream(),location, StandardCopyOption.REPLACE_EXISTING);
             opeResult.setCode(200);
             opeResult.setMessage("SUCCESS");
@@ -60,8 +59,6 @@ public class StorageService {
         OpeResult opeResult = new OpeResult();
         Path location;
         location = Paths.get(basepath + File.separator + filepath);
-        System.out.println(location);
-        System.out.println(Files.isDirectory(location));
         if(Files.isDirectory(location)){
             opeResult.setCode(500);
             opeResult.setMessage("Folder Already Exists");
@@ -78,20 +75,6 @@ public class StorageService {
         return opeResult;
     }
 
-    public OpeResult deleteDir(String dirpath) {
-        OpeResult opeResult = new OpeResult();
-        Path location = Paths.get(basepath+File.separator+dirpath);
-        try{
-            Files.delete(location);
-            opeResult.setCode(200);
-            opeResult.setMessage("SUCCESS");
-        } catch (IOException e) {
-            opeResult.setCode(500);
-            opeResult.setMessage("delete failed");
-        }
-        return opeResult;
-    }
-
     public FileSystemResource loadFileAsResource(String fileName){
         FileSystemResource fileSystemResource ;
         Path filePath = Paths.get(basepath + File.separator + fileName);
@@ -102,9 +85,9 @@ public class StorageService {
     }
 
     public List<Dir> getContent() {
-        return test(basepath);
+        return getContentRecursively(basepath);
     }
-    public List<Dir> test(String path){
+    private List<Dir> getContentRecursively(String path){
         List<Dir> dir = new ArrayList<>();
         File file = new File(path);
         File[] fs = file.listFiles();
@@ -112,7 +95,7 @@ public class StorageService {
             for(File f:fs){
                 if(f.isDirectory()){
                     Dir dir2 = new Dir();
-                    dir2.setChildren(test(f.getPath()));
+                    dir2.setChildren(getContentRecursively(f.getPath()));
                     dir2.setTitle(f.getName());
                     dir2.setLeaf(false);
                     dir.add(dir2);
