@@ -7,7 +7,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import DocEditor from './pages/docEditor';
 import DocPage from './pages/doc';
 import HomePage from './pages/home';
-import TempCloudDisk from './pages/tempCloudDisk';
+import CloudDisk from './pages/cloudDisk';
 import ClipboardPage from './pages/clipboard';
 import CCfSearchPage from './pages/ccfSearch';
 
@@ -23,7 +23,7 @@ const route2MenuWrapper = {
             "alias": new Set(["/index.html"])
         },
         {
-            "title": "实验室常用信息",
+            "title": "实验室常用信息", // parent node has no [page], [alias] and [path] prop
             "child": [
                 {
                     "path": "/page/doc",
@@ -39,7 +39,7 @@ const route2MenuWrapper = {
         },
         {
             "path": "/page/temp-cloud-disk",
-            "page": TempCloudDisk,
+            "page": CloudDisk,
             "title": "内部网盘",
         },
         {
@@ -111,7 +111,6 @@ export default class App extends Component {
             }
             return 0;
         });
-        console.log("app, routeList: ", routeList);
         return (
             <Layout className="app">
                 <Sider className="sider"

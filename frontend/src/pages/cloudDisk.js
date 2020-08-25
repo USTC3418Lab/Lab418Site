@@ -1,34 +1,40 @@
 import React from 'react';
 import { Component } from 'react';
-import { Layout, Tooltip, Space, Button, message, Input } from 'antd';
+import { Layout, Tooltip, Space, Button, message, Input, Popconfirm } from 'antd';
 import { InboxOutlined, DownloadOutlined, DeleteOutlined, FolderAddOutlined } from '@ant-design/icons';
 import DirectoryTree from 'antd/lib/tree/DirectoryTree';
 import Dragger from 'antd/lib/upload/Dragger';
-import '../styles/tempCloudDisk.css';
+import '../styles/cloudDisk.css';
 import { client } from '../client';
 import Modal from 'antd/lib/modal/Modal';
 import { isStrEmpty } from '../utils';
 
 const { Header, Content } = Layout;
 
-function getPathOnTreeFromKey(key, treeData) {
+// relative path without root-dir
+function getPathOnTreeFromKey(key, treeData, justPath) {
     var resPath = "";
-    var tmpData = treeData;
-    key.split('-').forEach(index => {
-        index = Number(index);
-        resPath = resPath + "/" + tmpData[index].title;
+    var tmpData = treeData[0].children;
+    let indexList = key.split('-');
+    for (let i = 1; i < indexList.length; i++) {
+        const index = Number(indexList[i]);
+        if (justPath && tmpData[index].isLeaf)
+            break;
+        resPath += tmpData[index].title;
+        if (!tmpData[index].isLeaf)
+            resPath += "/";
         tmpData = tmpData[index].children;
-    });
+    }
     return resPath;
 }
 
-export default class TempCloudDisk extends Component {
+export default class CloudDisk extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             // tree
-            dirData: [],
+            treeData: [],
             selectedKey: "0",
 
             // uploader
@@ -68,25 +74,22 @@ export default class TempCloudDisk extends Component {
     getFileTree() {
         client.getFileTree()
             .then(data => {
-                if (data.code === 200) {
-                    this.setState({ dirData: data.data });
-                } else {
-                    message.warn("获取文件列表失败，服务器错误");
-                    console.warn("get uploaded file failed, internal server error");
-                }
+                this.setState(prev => {
+                    return { treeData: data, selectedKey: prev.selectedKey }
+                });
             })
             .catch(reason => {
                 message.error("获取文件列表失败:" + reason);
-                console.log("get uploaded files failed: ", reason);
+                console.error("get uploaded files failed: ", reason);
             });
     }
 
     uploadFile() {
         if (!this.state.fileList || this.state.fileList.length === 0)
             return;
-        console.log("uploadFiles, files: ", this.state.fileList);
+        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.treeData, true);
         this.setState({ uploading: true });
-        client.uploadFile(this.state.fileList[0])
+        client.uploadFile(this.state.fileList[0].originFileObj, path)
             .then(data => {
                 if (data.code === 200) {
                     this.setState({
@@ -107,8 +110,8 @@ export default class TempCloudDisk extends Component {
     }
 
     deleteFile(ev) {
-        console.log("deleteFile, path: ", getPathOnTreeFromKey(this.state.selectedKey, this.state.dirData));
-        client.deleteFile(this.state.fileList[0])
+        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.treeData);
+        client.deleteFile(path)
             .then(data => {
                 if (data.code === 200) {
                     message.info("删除成功");
@@ -126,19 +129,8 @@ export default class TempCloudDisk extends Component {
 
     downloadFile() {
         // send request and do nothing
-        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.dirData);
-        console.log("download file, path: ", path);
-        client.downloadFile(path)
-            .then(data => {
-                if (data.code !== 200) {
-                    message.error("下载失败，服务器错误");
-                    console.error("download file failed, internal server error");
-                }
-            })
-            .catch(reason => {
-                message.error("下载失败: " + reason);
-                console.error("download file failed: ", reason);
-            });
+        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.treeData);
+        client.downloadFile(path);
     }
 
     makeDir() {
@@ -148,8 +140,7 @@ export default class TempCloudDisk extends Component {
         }
         this.setState({ confirmLoading: true });
         // make and get list again
-        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.dirData);
-        console.log("make dir, path: ", path);
+        const path = getPathOnTreeFromKey(this.state.selectedKey, this.state.treeData);
         client.makeDir(path + "/" + this.state.newDirName)
             .then(data => {
                 if (data.code === 200) {
@@ -159,11 +150,13 @@ export default class TempCloudDisk extends Component {
                 } else {
                     message.error("创建文件夹失败，服务器错误");
                     console.error("make dir failed, internal server error");
+                    this.setState({ confirmLoading: false });
                 }
             })
             .catch(reason => {
                 message.error("创建文件夹失败: " + reason);
                 console.error("make dir failed: ", reason);
+                this.setState({ confirmLoading: false });
             });
     }
 
@@ -183,7 +176,13 @@ export default class TempCloudDisk extends Component {
                     <DownloadOutlined onClick={this.downloadFile} />
                 </Tooltip>
                 <Tooltip title="删除" >
-                    <DeleteOutlined onClick={this.deleteFile} />
+                    <Popconfirm
+                        title="确定删除该文件？"
+                        onConfirm={this.deleteFile}
+                        okText="是"
+                        cancelText="否">
+                        <DeleteOutlined />
+                    </Popconfirm>
                 </Tooltip>
             </Space>;
         else
@@ -198,16 +197,16 @@ export default class TempCloudDisk extends Component {
 
     render() {
         var dirTree = null;
-        if (this.state.dirData && this.state.dirData.length > 0)
+        if (this.state.treeData && this.state.treeData.length > 0)
             dirTree =
                 <DirectoryTree
+                    defaultExpandAll
                     className="directory-tree"
                     expandAction="doubleClick"
-                    defaultExpandedKeys={["0"]}
                     defaultSelectedKeys={["0"]}
                     onSelect={this.onTreeSelect}
                     titleRender={this.titleRender}
-                    treeData={this.state.dirData}>
+                    treeData={this.state.treeData}>
                 </DirectoryTree>
 
         return <Layout className="cloud-disk-">

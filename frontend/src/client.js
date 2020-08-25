@@ -2,7 +2,7 @@ import { shuffle } from './utils';
 
 const axios = require('axios').default;
 
-const mock = true;
+const mock = false;
 
 const code2msg = {
     200: "SUCCESS",
@@ -81,19 +81,20 @@ const mockClient = {
     },
     downloadFile(path) {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({ code: 200, message: "SUCCESS" });
-            }, 1000);
+            // setTimeout(() => {
+            //     resolve({ code: 200, message: "SUCCESS" });
+            // }, 1000);
+            window.open("/cloud-disk/download?filepath=" + path);
         });
     },
-    uploadFile(file) {
+    uploadFile(file, dirPath) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({ code: 200, message: "SUCCESS" });
             }, 1000);
         });
     },
-    deleteFile(file) {
+    deleteFile(path) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({ code: 200, message: "SUCCESS" });
@@ -128,7 +129,7 @@ const mockClient = {
                         }
                     );
                 }
-                resolve({ code: 200, message: "OK", data: [{ title: 'root-folder', key: '0', isLeaf: false, children: children }] });
+                resolve([{ title: 'root-folder', key: '0', isLeaf: false, children: children }]);
             }, 1000);
         });
     }
@@ -239,6 +240,70 @@ const realClient = {
                         resolve(resp.data);
                     else
                         reject(resp.statusText)
+                })
+                .catch(reason => reject(reason));
+        });
+    },
+    makeDir(path) {
+        return new Promise((resolve, reject) => {
+            axios.post("/cloud-disk/mkdir", makeFormBody({ "filepath": path }), {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    downloadFile(path) {
+        return new Promise((resolve, reject) => {
+            window.open("/cloud-disk/download?filepath=" + path);
+            // axios.get("/cloud-disk/download?filepath=" + path)
+            //     .then(resp => {
+            //         if (resp.status === 200)
+            //             resolve(resp.data);
+            //         else
+            //             reject(resp.statusText);
+            //     }).catch(reason => reject(reason));
+        });
+    },
+    uploadFile(file, dirPath) {
+        // FIXME 设置默认 selectedkeys 和 展开
+        return new Promise((resolve, reject) => {
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("dir", dirPath);
+            axios.post("/cloud-disk/upload", formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    deleteFile(path) {
+        return new Promise((resolve, reject) => {
+            axios.post("/cloud-disk/delete", makeFormBody({ filepath: path }), {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    getFileTree() {
+        return new Promise((resolve, reject) => {
+            axios.get("/cloud-disk")
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve([{ title: "/", isLeaf: false, key: '0', children: resp.data }]);
+                    else
+                        reject(resp.statusText);
                 })
                 .catch(reason => reject(reason));
         });

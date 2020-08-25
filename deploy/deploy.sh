@@ -24,7 +24,10 @@ set -e
 set -u
 
 echo '创建MySQL目录'
-mkdir -p /lab418/mysql/data
+sudo mkdir -m 777 -p /lab418/mysql/data
+
+echo '创建网盘目录'
+sudo mkdir -m 777 -p /lab418/clouddisk
 
 echo '进入项目根目录'
 cd ../                        # /
