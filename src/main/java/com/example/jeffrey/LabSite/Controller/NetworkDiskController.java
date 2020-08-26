@@ -57,7 +57,7 @@ public class NetworkDiskController {
             filename = filepath.substring(index+1,filepath.length());
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition","attachment;filename="+filename);
+        headers.add("Content-Disposition","attachment;filename="+new String(filename.getBytes("UTF-8"),"iso-8859-1"));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(file.contentLength())

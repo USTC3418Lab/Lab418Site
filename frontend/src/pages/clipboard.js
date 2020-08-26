@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Layout, Button, Card, message } from 'antd';
+import { Layout, Button, Card, message, Tooltip } from 'antd';
 import '../styles/clipboard.css';
 import { EyeOutlined, DeleteOutlined, CloseCircleOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
 import 'codemirror/lib/codemirror.css';
@@ -32,6 +32,8 @@ export default class ClipboardPage extends Component {
     }
 
     componentDidMount() { this.getClipboardTexts(); }
+
+    componentWillUnmount() { this.setState = (state) => { return } }
 
     getClipboardTexts() {
         client.getClipboardTexts()
@@ -141,12 +143,16 @@ export default class ClipboardPage extends Component {
                         className="clipboard-view-content"
                         onClick={(e) => e.stopPropagation()}>
                         <div style={{ alignSelf: "flex-end" }}>
-                            <VerticalAlignBottomOutlined 
-                                style={{ float: "left", color: "gray", marginRight: "5px" }}
-                                onClick={() => { this.viewHolderEnd.scrollIntoView() }} />
-                            <CloseCircleOutlined
-                                style={{ float: "left", color: "gray" }}
-                                onClick={this.hideViewer} />
+                            <Tooltip title="滚动到底部">
+                                <VerticalAlignBottomOutlined
+                                    style={{ float: "left", color: "gray", marginRight: "5px" }}
+                                    onClick={() => { this.viewHolderEnd.scrollIntoView() }} />
+                            </Tooltip>
+                            <Tooltip title="关闭">
+                                <CloseCircleOutlined
+                                    style={{ float: "left", color: "gray" }}
+                                    onClick={this.hideViewer} />
+                            </Tooltip>
                         </div>
                         <Text
                             copyable={{ tooltips: ["复制", "已复制"] }}>

@@ -40,17 +40,19 @@ const mockClient = {
     },
     getClipboardTexts() {
         return new Promise((resolve, reject) => {
-            const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
-            const tmpi = Math.floor(Math.random() * tmpLi.length);
-            const res = [];
-            for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
-                res.push({
-                    id: i,
-                    text: "this " + i + "短文本分享，类似于云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,  mes: 200 SUCCESS, 400 FAIL\n后端我也直接写了吧\n",
-                    timestamp: 1500000000290 + i * 10000000,
-                })
-            }
-            resolve(shuffle(res));
+            setTimeout(() => {
+                const tmpLi = [1, 2, 3, 4, 5, 6, 7, 8];
+                const tmpi = Math.floor(Math.random() * tmpLi.length);
+                const res = [];
+                for (let i = 0; i < tmpLi[tmpi] * 2; i++) {
+                    res.push({
+                        id: i,
+                        text: "this " + i + "短文本分享，类似于云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode, 云剪贴板\n\n前端\n\nimage\n\n后端\n\n短文本格式: {id, string, timestamp}，直接存放在数组中\n接口\n获取所有短文本 GET 无参数 返回JSON数组[]\n添加某个短文本 POST 参数:{string} 返回 {code, message}\n数组设置上限(1000)，超过此上限就移除时间戳最小（下标最小的）的\n删除某个短文本 GET 参数:{id} 返回{code, message}\ncode,  mes: 200 SUCCESS, 400 FAIL\n后端我也直接写了吧\n",
+                        timestamp: 1500000000290 + i * 10000000,
+                    })
+                }
+                resolve(shuffle(res));
+            }, 1000);
         });
     },
     deleteClipboardText(id) {
@@ -67,6 +69,67 @@ const mockClient = {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve([{ "title": "A fork() in the road.", "href": "https://github.com/USTC3418Lab/Lab418Site/issues/8", "conference": "HotOS2019", "degree": "B类" }]);
+            }, 1000);
+        });
+    },
+    makeDir(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    downloadFile(path) {
+        return new Promise((resolve, reject) => {
+            // setTimeout(() => {
+            //     resolve({ code: 200, message: "SUCCESS" });
+            // }, 1000);
+            window.open("/cloud-disk/download?filepath=" + path);
+        });
+    },
+    uploadFile(file, dirPath) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    deleteFile(path) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ code: 200, message: "SUCCESS" });
+            }, 1000);
+        });
+    },
+    getFileTree() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const childNum = Math.floor(Math.random() * 10) + 2;
+                var children = [];
+                for (let i = 0; i < childNum; i++) {
+                    children.push(
+                        {
+                            title: 'child-folder-' + i,
+                            key: '0-' + i,
+                            isLeaf: false,
+                            children: [
+                                {
+                                    title: 'a-' + i + '.txt',
+                                    key: '0-' + i + '-0',
+                                    isLeaf: true,
+                                    children: null
+                                },
+                                {
+                                    title: 'b-' + i + '.txt',
+                                    key: '0-' + i + '-1',
+                                    isLeaf: true,
+                                    children: null
+                                }
+                            ]
+                        }
+                    );
+                }
+                resolve([{ title: 'root-folder', key: '0', isLeaf: false, children: children }]);
             }, 1000);
         });
     }
@@ -177,6 +240,70 @@ const realClient = {
                         resolve(resp.data);
                     else
                         reject(resp.statusText)
+                })
+                .catch(reason => reject(reason));
+        });
+    },
+    makeDir(path) {
+        return new Promise((resolve, reject) => {
+            axios.post("/cloud-disk/mkdir", makeFormBody({ "filepath": path }), {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    downloadFile(path) {
+        return new Promise((resolve, reject) => {
+            window.open("/cloud-disk/download?filepath=" + path);
+            // axios.get("/cloud-disk/download?filepath=" + path)
+            //     .then(resp => {
+            //         if (resp.status === 200)
+            //             resolve(resp.data);
+            //         else
+            //             reject(resp.statusText);
+            //     }).catch(reason => reject(reason));
+        });
+    },
+    uploadFile(file, dirPath) {
+        // FIXME 设置默认 selectedkeys 和 展开
+        return new Promise((resolve, reject) => {
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("dir", dirPath);
+            axios.post("/cloud-disk/upload", formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    deleteFile(path) {
+        return new Promise((resolve, reject) => {
+            axios.post("/cloud-disk/delete", makeFormBody({ filepath: path }), {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(resp => {
+                if (resp.status === 200)
+                    resolve(resp.data);
+                else
+                    reject(resp.statusText);
+            }).catch(reason => reject(reason));
+        });
+    },
+    getFileTree() {
+        return new Promise((resolve, reject) => {
+            axios.get("/cloud-disk")
+                .then(resp => {
+                    if (resp.status === 200)
+                        resolve([{ title: "/", isLeaf: false, key: '0', children: resp.data }]);
+                    else
+                        reject(resp.statusText);
                 })
                 .catch(reason => reject(reason));
         });

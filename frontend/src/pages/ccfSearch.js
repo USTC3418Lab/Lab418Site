@@ -8,7 +8,7 @@ import { isStrEmpty } from '../utils';
 import { client } from '../client';
 
 const { Header, Content } = Layout;
-export default class ccfSearchPage extends Component {
+export default class CCFSearchPage extends Component {
     constructor(props) {
         super(props);
 

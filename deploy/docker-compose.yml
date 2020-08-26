@@ -11,6 +11,8 @@ services:
         links: 
             - mysql:lab418mysql
             - redis:lab418redis
+        volumes: 
+            - /lab418/clouddisk:/lab418/clouddisk
     mysql:
         build: 
             context: ./

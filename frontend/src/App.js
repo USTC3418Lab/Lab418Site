@@ -7,35 +7,110 @@ import { Switch, Route, Link } from 'react-router-dom';
 import DocEditor from './pages/docEditor';
 import DocPage from './pages/doc';
 import HomePage from './pages/home';
-import TempCloudDisk from './pages/tempCloudDisk';
+import CloudDisk from './pages/cloudDisk';
 import ClipboardPage from './pages/clipboard';
-import ccfSearchPage from './pages/ccfSearch';
+import CCfSearchPage from './pages/ccfSearch';
 
 const { Header, Sider } = Layout;
 
-const pathList = ["/", "/page/doc", "/page/doc-editor", "/page/temp-cloud-disk", "/page/clipboard", "/page/ccf-search", "/page/doc-update"];
 
-const path2All = {
-    mapper: {
-        "/index.html": { page: HomePage, menuIndex: 0, title: "首页" },
-        "/": { page: HomePage, menuIndex: 0, title: "首页" },
-        "/page/doc": { page: DocPage, menuIndex: 1, title: "所有信息", fatherTitle: "实验室常用信息" },
-        "/page/doc-editor": { page: DocEditor, menuIndex: 2, title: "添加信息" },
-        "/page/temp-cloud-disk": { page: TempCloudDisk, menuIndex: 3, title: "临时网盘" },
-        "/page/clipboard": { page: ClipboardPage, menuIndex: 4, title: "剪贴板" },
-        "/page/ccf-search": { page: ccfSearchPage, menuIndex: 5, title: "CCF类别检索" },
-        "/page/doc-update": { page: DocEditor, menuIndex: 1, title: "" },
-    },
-    getPath(index) { return pathList[index] },
-    getPage(index) { return this.mapper[pathList[index]] },
-    getPageByPath(path) { return this.mapper[path].page },
-    getTitle(index) { return this.mapper[pathList[index]].title },
-    getFatherTitle(index) { return this.mapper[pathList[index]].fatherTitle },
-    getIndexByPath(path) { return this.mapper[path].menuIndex }
-};
+const route2MenuWrapper = {
+    allRoutes: [
+        {
+            "path": "/",
+            "page": HomePage,
+            "title": "首页",
+            "alias": new Set(["/index.html"])
+        },
+        {
+            "title": "实验室常用信息", // parent node has no [page], [alias] and [path] prop
+            "child": [
+                {
+                    "path": "/page/doc",
+                    "page": DocPage,
+                    "title": "常用信息",
+                },
+                {
+                    "path": "/page/doc-editor",
+                    "page": DocEditor,
+                    "title": "添加信息",
+                }
+            ]
+        },
+        {
+            "path": "/page/temp-cloud-disk",
+            "page": CloudDisk,
+            "title": "内部网盘",
+        },
+        {
+            "path": "/page/clipboard",
+            "page": ClipboardPage,
+            "title": "剪贴板",
+        },
+        {
+            "path": "/page/ccf-search",
+            "page": CCfSearchPage,
+            "title": "CCF类别检索",
+        },
+        {
+            "path": "/page/doc-update",
+            "page": DocEditor,
+            "notMenu": true
+        },
+    ],
+    getIndexByPath(path) {
+        var k = 0;
+        for (let i = 0; i < this.allRoutes.length; i++) {
+            const route = this.allRoutes[i];
+            if (route.child) {
+                for (let j = 0; j < route.child.length; j++) {
+                    // should check childRoute alias too
+                    if (route.child[j].path === path)
+                        return k;
+                    k++;
+                }
+            }
+            else {
+                if (route.path === path || (route.alias && route.alias.has(path)))
+                    return k;
+                k++;
+            }
+        }
+        return 0;
+    }
+}
 
 export default class App extends Component {
     render() {
+        var routeList = [], k = 0;
+        route2MenuWrapper.allRoutes.map((route, index) => {
+            if (route.child) {
+                route.child.forEach((childRoute, index) => {
+                    routeList.push(
+                        <Route key={k} exact={true}
+                            path={childRoute.path}
+                            component={childRoute.page} />
+                    );
+                    k++;
+                })
+            } else {
+                routeList.push(
+                    <Route key={k} exact={true}
+                        path={route.path}
+                        component={route.page} />
+                );
+                k++;
+                if (route.alias)
+                    route.alias.forEach((v) => {
+                        routeList.push(<Route key={k} exact={true}
+                            path={v}
+                            component={route.page} />
+                        );
+                        k++;
+                    })
+            }
+            return 0;
+        });
         return (
             <Layout className="app">
                 <Sider className="sider"
@@ -45,24 +120,27 @@ export default class App extends Component {
                     <Header className="header">
                         <Link
                             onSelect={() => false}
-                            to={path2All.getPage(0)}
+                            to={route2MenuWrapper.allRoutes[0].path}
                             className="sider-title">
                             Lab&nbsp;3418
                         </Link>
                     </Header>
                     <Route path={'/'} render={(routeProps) => (
-                        <SiderMenu {...routeProps} path2All={path2All} />
+                        <SiderMenu
+                            {...routeProps}
+                            route2MenuWrapper={route2MenuWrapper} />
                     )} />
                 </Sider>
                 <Layout className="app-body">
                     <Switch>
-                        <>
+                        {/* <>
                             {pathList.map((path, index) => (
                                 <Route
                                     key={index} path={path} exact={true}
                                     component={path2All.getPageByPath(path)} />
                             ))}
-                        </>
+                        </> */}
+                        {routeList}
                     </Switch>
                 </Layout>
             </Layout>);

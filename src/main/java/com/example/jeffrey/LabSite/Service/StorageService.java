@@ -18,6 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,23 +28,24 @@ public class StorageService {
     @Value("${config.basePath}")
     private String basepath;
 
-    public OpeResult uploadFile(MultipartFile file, String relative_path){
+    public OpeResult uploadFile(MultipartFile file, String relative_path) {
         OpeResult opeResult = new OpeResult();
-        try{
-            Path location = Paths.get(basepath + File.separator + relative_path + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(),location, StandardCopyOption.REPLACE_EXISTING);
+        try {
+            Path location = Paths.get(basepath + File.separator + relative_path + File.separator
+                    + StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
             opeResult.setCode(200);
             opeResult.setMessage("SUCCESS");
-        }catch (Exception e){
+        } catch (Exception e) {
             opeResult.setCode(500);
             opeResult.setMessage("CANT STORE");
         }
         return opeResult;
     }
 
-    public OpeResult deleteFile(String filepath){
+    public OpeResult deleteFile(String filepath) {
         OpeResult opeResult = new OpeResult();
-        Path location = Paths.get(basepath+File.separator+filepath);
+        Path location = Paths.get(basepath + File.separator + filepath);
         System.out.println(location);
         try {
             Files.delete(location);
@@ -59,24 +62,24 @@ public class StorageService {
         OpeResult opeResult = new OpeResult();
         Path location;
         location = Paths.get(basepath + File.separator + filepath);
-        if(Files.isDirectory(location)){
+        if (Files.isDirectory(location)) {
             opeResult.setCode(500);
             opeResult.setMessage("Folder Already Exists");
             return opeResult;
         }
-        try{
+        try {
             Files.createDirectory(location);
             opeResult.setCode(200);
             opeResult.setMessage("SUCCESS");
-        }catch (IOException e){
+        } catch (IOException e) {
             opeResult.setCode(500);
             opeResult.setMessage("Folder Create Failed");
         }
         return opeResult;
     }
 
-    public FileSystemResource loadFileAsResource(String fileName){
-        FileSystemResource fileSystemResource ;
+    public FileSystemResource loadFileAsResource(String fileName) {
+        FileSystemResource fileSystemResource;
         Path filePath = Paths.get(basepath + File.separator + fileName);
         fileSystemResource = new FileSystemResource(filePath);
         System.out.println(fileSystemResource);
@@ -85,27 +88,39 @@ public class StorageService {
     }
 
     public List<Dir> getContent() {
-        return getContentRecursively(basepath);
+        return getContentRecursively(basepath, "0");
     }
-    private List<Dir> getContentRecursively(String path){
+
+    private List<Dir> getContentRecursively(String path, String baseKey) {
+        final String subMakr = "-";
         List<Dir> dir = new ArrayList<>();
         File file = new File(path);
         File[] fs = file.listFiles();
-        if (fs!=null){
-            for(File f:fs){
-                if(f.isDirectory()){
-                    Dir dir2 = new Dir();
-                    dir2.setChildren(getContentRecursively(f.getPath()));
-                    dir2.setTitle(f.getName());
-                    dir2.setLeaf(false);
-                    dir.add(dir2);
-                }else{
-                    Dir dir1 = new Dir();
-                    dir1.setChildren(null);
-                    dir1.setLeaf(true);
-                    dir1.setTitle(f.getName());
-                    dir.add(dir1);
+        if (fs != null) {
+            Arrays.sort(fs, new Comparator<File>() {
+                @Override
+                public int compare(File a, File b) {
+                    if ((a.isDirectory() && b.isDirectory()) || (!a.isDirectory() && !b.isDirectory()))
+                        return a.getName().compareTo(b.getName());
+                    return a.isDirectory() ? -1 : 1;
                 }
+            });
+            int i = 0;
+            for (File f : fs) {
+                Dir tmpDir = new Dir();
+                final String tmpKey = baseKey + subMakr + String.valueOf(i);
+                tmpDir.setKey(tmpKey);
+                if (f.isDirectory()) {
+                    tmpDir.setChildren(getContentRecursively(f.getPath(), tmpKey));
+                    tmpDir.setTitle(f.getName());
+                    tmpDir.setIsLeaf(false);
+                } else {
+                    tmpDir.setChildren(null);
+                    tmpDir.setIsLeaf(true);
+                    tmpDir.setTitle(f.getName());
+                }
+                dir.add(tmpDir);
+                ++i;
             }
         }
         return dir;
