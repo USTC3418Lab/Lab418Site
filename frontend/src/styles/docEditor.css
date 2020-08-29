@@ -31,6 +31,13 @@
     padding: var(--gap-common);
 }
 
+@media screen and (orientation: portrait) {
+    .editor-holder {
+        flex-direction: column;
+        overflow: hidden;
+    }
+}
+
 .editor-codemirror {
     margin-right: calc(var(--gap-common) / 2);
     overflow: auto;

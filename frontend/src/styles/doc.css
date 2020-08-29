@@ -12,7 +12,6 @@
 
 .doc-card {
     margin: var(--gap-common);
-    max-width: 30%;
     height: fit-content;
     transition: all 300ms ease;
 }
@@ -26,4 +25,20 @@
     height: fit-content;
     align-self: center;
     text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+    .doc-content {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .doc-card {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 1280px) and (orientation: landscape) {
+    .doc-card {
+        max-width: 31%;
+    }
 }
