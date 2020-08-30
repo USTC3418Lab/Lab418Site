@@ -116,6 +116,7 @@ export default class App extends Component {
                 <Sider className="sider"
                     breakpoint="lg"
                     theme="light"
+                    zeroWidthTriggerStyle={{zIndex: 100, boxShadow: "lightGray 1px 1px 18px"}}
                     collapsedWidth="0" >
                     <Header className="header">
                         <Link

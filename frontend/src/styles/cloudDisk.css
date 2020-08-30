@@ -4,6 +4,12 @@
     height: 100%;
 }
 
+@media screen and (orientation: portrait) {
+    .cloud-disk-content {
+        flex-direction: column;
+    }
+}
+
 .directory-tree-holder {
     background-color: rgb(245, 245, 245);
     padding: var(--gap-common);

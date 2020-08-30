@@ -1,11 +1,11 @@
 import React from 'react';
 import { Component } from 'react';
+import TextArea from 'antd/lib/input/TextArea';
 import { Layout, Button, Card, message, Tooltip } from 'antd';
-import '../styles/clipboard.css';
 import { EyeOutlined, DeleteOutlined, CloseCircleOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
-import TextArea from 'antd/lib/input/TextArea';
+import '../styles/clipboard.css';
 import { client } from '../client';
 import { isStrEmpty, timeStamp2Str } from '../utils';
 import Text from 'antd/lib/typography/Text';
@@ -128,8 +128,7 @@ export default class ClipboardPage extends Component {
                     <TextArea
                         placeholder="你想要分享什么=_=?"
                         className="clipboard-textarea"
-                        onChange={this.onTextChange}
-                        rows={20} />
+                        onChange={this.onTextChange} />
                     <Button type="primary" block onClick={this.pasteText}>粘贴!</Button>
                 </div>
                 <div className="clipboard-result-holder">
