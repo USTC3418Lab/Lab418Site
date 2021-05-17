@@ -3,6 +3,28 @@
     --gap-common: 20px;
 }
 
+.identify-holder {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 120px;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+}
+
+.loading-holder {
+    margin: auto;
+    text-align: center;
+    font-size: x-large;
+    margin-top: 120px;
+}
+
+.identify-holder>* {
+    margin-bottom: 5px;
+}
+
 .sider, .app-body, .header, .header-text, .content, .footer, .sider-title {
     background-color: whitesmoke;
     color: rgb(2, 10, 20);

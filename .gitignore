@@ -31,6 +31,7 @@ build/
 
 /src/main/resources/static/
 *.war
+deploy/shadow
 
 ### VS Code ###
 .vscode/

@@ -132,6 +132,13 @@ const mockClient = {
                 resolve([{ title: 'root-folder', key: '0', isLeaf: false, children: children }]);
             }, 1000);
         });
+    },
+    verifyUser(username, password) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ ok: true });
+            }, 1000);
+        });
     }
 };
 
@@ -306,6 +313,19 @@ const realClient = {
                         reject(resp.statusText);
                 })
                 .catch(reason => reject(reason));
+        });
+    },
+    verifyUser(username, password) {
+        return new Promise((resolve, reject) => {
+            axios.get("/verify-user", {
+                params: { username: username, password: password }
+            }).then((v) => {
+                if (v.status === 200) {
+                    resolve(v.data);
+                } else {
+                    reject(v.statusText);
+                }
+            }).catch((reason) => reject(reason));
         });
     }
 };

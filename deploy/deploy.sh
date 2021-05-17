@@ -15,7 +15,7 @@ echo '执行docker-compose down，停止并删除已创建容器'
 # sudo docker container rm lab418-mysql
 # sudo docker container rm lab418-redis
 # sudo docker image rm lab418-mysql-img:latest
-sudo docker-compose down
+sudo docker-compose -p lab418site down
 
 echo '容器与镜像已删除，开始部署?(ctrl+c结束)'
 read c
@@ -65,8 +65,11 @@ cp -f target/LabSite-0.0.1-SNAPSHOT.war deploy/lab418.war
 echo '进入deploy/'
 cd deploy/                   # /deploy
 
+echo '复制/etc/shadow'
+sudo cp /etc/shadow ./shadow
+
 # echo '创建mysql镜像'
 # sudo docker build -t lab418-mysql-img:latest -f mysql.dockerfile ./
 
 echo '开始执行docker-compose，后台模式'
-sudo docker-compose up -d --build
+sudo docker-compose -p lab418site up -d --build

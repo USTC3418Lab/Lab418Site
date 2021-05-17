@@ -20,3 +20,16 @@ export function shuffle(array) {
     }
     return array;
 };
+
+export function getUserIdentity() {
+    let id = localStorage.getItem("identity");
+    if (id != null)
+        return JSON.parse(id);
+    return null;
+}
+
+export function setUserIdentity(username, password) {
+    localStorage.setItem("identity", JSON.stringify(
+        { username: username, password: password }
+    ));
+}
