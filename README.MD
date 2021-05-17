@@ -2,8 +2,44 @@
 
 USTC网络安全实验室网站代码，采用SpringBoot+React编写
 
-## 添加功能
+### 如何构建
 
+本项目采用前后端分离方式编写，文件夹结构如下:
+```sh
+.
+├── deploy      # 部署脚本及dockerfile等
+├── frontend    # 前端项目代码
+├── LICENSE
+├── .mvn        
+├── mvnw.cmd    # 后端maven文件
+├── mvnw
+├── pom.xml
+├── postman     # postman测试
+├── README.MD
+└── src         # 后端代码
+```
+
+### 构建前端
+
+前端位于`frontend`目录中，使用`npm`构建，并且需要在构建后拷贝到后端代码的`static`文件夹下:
+```sh
+cd frontend/
+npm run build
+cp -rf build/* ../src/main/resources/static/
+```
+
+### 构建后端
+
+在根目录运行`mvn compile`或在IDE中直接运行打包后端，生成`target/LabSite*.war`文件，之后通过tomcat部署即可。
+
+**注意**：你可能需要更改[application.properties](https://github.com/USTC3418Lab/Lab418Site/blob/master/src/main/resources/application.properties)中的数据库等配置信息，其中
+- `spring.datasource.password`字段需要通过[测试文件](https://github.com/USTC3418Lab/Lab418Site/blob/63ea52fa239ba7f5a03ffb46268b16b4d3f7d87b/src/test/java/com/example/jeffrey/LabSite/LabSiteApplicationTests.java#L32)生成。
+- `config.basePath=/lab418/clouddisk`字段为网盘功能根目录，执行如下命令创建
+  ```sh
+  sudo mkdir -p -m 777 /Lab418/clouddisk/
+  ```
+
+## 添加功能
 **请按照如下步骤添加功能，不要直接push！**
 
 1. 提issue描述功能，确定前端、后端的设计与实现，确定前后端接口
@@ -18,7 +54,6 @@ USTC网络安全实验室网站代码，采用SpringBoot+React编写
   - 删除
 - 剪贴板
 - 内部网盘
-- 身份认证
 - 富文本编辑器
 
 ## 已完成接口
